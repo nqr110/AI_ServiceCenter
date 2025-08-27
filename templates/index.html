@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>金华市立体地图 | Jinhua 3D Map</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts-gl@2.0.9/dist/echarts-gl.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>金华市立体地图</h1>
+            <p>基于ECharts GL 的高级3D地理可视化 | Advanced 3D Geographic Visualization</p>
+        </header>
+        
+        <div id="map-container"></div>
+        
+        <div class="controls">
+            <button id="rotate-btn">自动旋转</button>
+            <button id="reset-btn">重置视角</button>
+            <div class="info">
+                <p>数据来源：阿里云DataV | Data Source: Aliyun DataV</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
