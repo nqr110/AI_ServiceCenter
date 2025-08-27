@@ -9,23 +9,51 @@
     <script src="https://cdn.jsdelivr.net/npm/echarts-gl@2.0.9/dist/echarts-gl.min.js"></script>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>金华市立体地图</h1>
-            <p>基于ECharts GL 的高级3D地理可视化 | Advanced 3D Geographic Visualization</p>
-        </header>
-        
-        <div id="map-container"></div>
-        
-        <div class="controls">
-            <button id="rotate-btn">自动旋转</button>
-            <button id="reset-btn">重置视角</button>
-            <div class="info">
-                <p>数据来源：阿里云DataV | Data Source: Aliyun DataV</p>
+    <!-- 标题区域 -->
+    <div class="header">
+        <h1 class="main-title">AAAAA</h1>
+        <h2 class="sub-title">BBBBB</h2>
+    </div>
+    
+    <!-- 左侧容器 -->
+    <div class="left-panel">
+        <div class="panel-container">
+            <div class="panel-item" id="left-panel-1">
+                <h3>左侧面板1</h3>
+                <div class="panel-content">数据内容1</div>
+            </div>
+            <div class="panel-item" id="left-panel-2">
+                <h3>左侧面板2</h3>
+                <div class="panel-content">数据内容2</div>
+            </div>
+            <div class="panel-item" id="left-panel-3">
+                <h3>左侧面板3</h3>
+                <div class="panel-content">数据内容3</div>
             </div>
         </div>
     </div>
-
+    
+    <!-- 右侧容器 -->
+    <div class="right-panel">
+        <div class="panel-container">
+            <div class="panel-item" id="right-panel-1">
+                <h3>右侧面板1</h3>
+                <div class="panel-content">数据内容1</div>
+            </div>
+            <div class="panel-item" id="right-panel-2">
+                <h3>右侧面板2</h3>
+                <div class="panel-content">数据内容2</div>
+            </div>
+            <div class="panel-item" id="right-panel-3">
+                <h3>右侧面板3</h3>
+                <div class="panel-content">数据内容3</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 中央地图容器 -->
+    <div id="map-container"></div>
+    
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>

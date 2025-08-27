@@ -42,21 +42,7 @@ function initMap() {
         // 配置选项
         const option = {
             backgroundColor: '#0f172a',
-            title: {
-                text: '金华市立体地图',
-                subtext: 'Jinhua 3D Map Visualization',
-                left: 'center',
-                top: 20,
-                textStyle: {
-                    color: '#ffffff',
-                    fontSize: 24,
-                    fontWeight: 'normal'
-                },
-                subtextStyle: {
-                    color: '#93c5fd',
-                    fontSize: 14
-                }
-            },
+
             tooltip: {
                 trigger: 'item',
                 formatter: function(params) {
@@ -287,8 +273,4 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     initMap();
-    
-    // 绑定按钮事件
-    document.getElementById('rotate-btn').addEventListener('click', rotateView);
-    document.getElementById('reset-btn').addEventListener('click', resetView);
 });
