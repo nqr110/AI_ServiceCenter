@@ -99,6 +99,250 @@ body {
     line-height: 1.5;
 }
 
+/* 全息投影动画 */
+@keyframes hologram-pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+}
+
+@keyframes hologram-glow {
+    0% {
+        text-shadow: 0 0 10px #3b82f6, 0 0 20px #3b82f6, 0 0 30px #3b82f6;
+    }
+    50% {
+        text-shadow: 0 0 15px #60a5fa, 0 0 25px #60a5fa, 0 0 35px #60a5fa;
+    }
+    100% {
+        text-shadow: 0 0 10px #3b82f6, 0 0 20px #3b82f6, 0 0 30px #3b82f6;
+    }
+}
+
+@keyframes hologram-click {
+    0% {
+        transform: scale(1);
+    }
+    25% {
+        transform: scale(1.3);
+    }
+    50% {
+        transform: scale(0.8);
+    }
+    75% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* 全息投影标识样式 */
+.hologram-marker {
+    animation: hologram-pulse 2s ease-in-out infinite;
+}
+
+.hologram-marker .glow {
+    animation: hologram-glow 1.5s ease-in-out infinite;
+}
+
+.hologram-marker.clicked {
+    animation: hologram-click 0.6s ease-in-out;
+}
+
+/* 点击动画效果 */
+@keyframes hologram-click {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 1;
+        border-width: 2px;
+    }
+    50% {
+        width: 100px;
+        height: 100px;
+        opacity: 0.8;
+        border-width: 1px;
+    }
+    100% {
+        width: 200px;
+        height: 200px;
+        opacity: 0;
+        border-width: 0px;
+    }
+}
+
+/* 加载动画样式 */
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, #0f1419 0%, #1e3a8a 50%, #1e40af 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    transition: opacity 0.5s ease-out;
+}
+
+.loading-container {
+    text-align: center;
+    color: #ffffff;
+}
+
+.loading-logo {
+    margin-bottom: 40px;
+}
+
+.hologram-sphere {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.8) 0%, rgba(30, 64, 175, 0.6) 50%, rgba(15, 23, 42, 0.4) 100%);
+    box-shadow: 
+        0 0 30px rgba(59, 130, 246, 0.6),
+        0 0 60px rgba(59, 130, 246, 0.4),
+        0 0 90px rgba(59, 130, 246, 0.2);
+    animation: sphere-rotate 3s linear infinite;
+    position: relative;
+}
+
+.hologram-sphere::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(147, 197, 253, 0.9) 0%, rgba(59, 130, 246, 0.7) 100%);
+    animation: sphere-pulse 2s ease-in-out infinite;
+}
+
+.hologram-sphere::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    animation: sphere-core 1.5s ease-in-out infinite;
+}
+
+.loading-text {
+    font-size: 24px;
+    font-weight: 300;
+    color: #ffffff;
+    text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+    animation: text-glow 2s ease-in-out infinite;
+}
+
+.loading-progress {
+    margin-bottom: 30px;
+}
+
+.progress-bar {
+    width: 400px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    margin: 0 auto 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #3b82f6, #60a5fa, #93c5fd);
+    border-radius: 3px;
+    width: 0%;
+    transition: width 0.3s ease;
+    position: relative;
+}
+
+.progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: progress-shine 1.5s ease-in-out infinite;
+}
+
+.progress-text {
+    font-size: 16px;
+    color: #93c5fd;
+    font-weight: 500;
+}
+
+.loading-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.step {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+    transition: all 0.3s ease;
+    opacity: 0.3;
+}
+
+.step.active {
+    color: #60a5fa;
+    opacity: 1;
+    text-shadow: 0 0 10px rgba(96, 165, 250, 0.5);
+}
+
+.step.completed {
+    color: #10b981;
+    opacity: 0.8;
+}
+
+/* 加载动画关键帧 */
+@keyframes sphere-rotate {
+    0% { transform: rotateY(0deg); }
+    100% { transform: rotateY(360deg); }
+}
+
+@keyframes sphere-pulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+    50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+}
+
+@keyframes sphere-core {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.9; }
+    50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+}
+
+@keyframes text-glow {
+    0%, 100% { text-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
+    50% { text-shadow: 0 0 30px rgba(59, 130, 246, 0.8); }
+}
+
+@keyframes progress-shine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
 /* 中央地图容器 */
 #map-container {
     position: fixed;

@@ -9,50 +9,75 @@
     <script src="https://cdn.jsdelivr.net/npm/echarts-gl@2.0.9/dist/echarts-gl.min.js"></script>
 </head>
 <body>
-    <!-- 标题区域 -->
-    <div class="header">
-        <h1 class="main-title">AAAAA</h1>
-        <h2 class="sub-title">BBBBB</h2>
-    </div>
-    
-    <!-- 左侧容器 -->
-    <div class="left-panel">
-        <div class="panel-container">
-            <div class="panel-item" id="left-panel-1">
-                <h3>左侧面板1</h3>
-                <div class="panel-content">数据内容1</div>
+    <!-- 加载动画 -->
+    <div id="loading-screen">
+        <div class="loading-container">
+            <div class="loading-logo">
+                <div class="hologram-sphere"></div>
+                <div class="loading-text">系统启动中...</div>
             </div>
-            <div class="panel-item" id="left-panel-2">
-                <h3>左侧面板2</h3>
-                <div class="panel-content">数据内容2</div>
+            <div class="loading-progress">
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+                <div class="progress-text">0%</div>
             </div>
-            <div class="panel-item" id="left-panel-3">
-                <h3>左侧面板3</h3>
-                <div class="panel-content">数据内容3</div>
+            <div class="loading-steps">
+                <div class="step" data-step="1">初始化系统...</div>
+                <div class="step" data-step="2">加载地图数据...</div>
+                <div class="step" data-step="3">渲染3D场景...</div>
+                <div class="step" data-step="4">启动完成</div>
             </div>
         </div>
     </div>
     
-    <!-- 右侧容器 -->
-    <div class="right-panel">
-        <div class="panel-container">
-            <div class="panel-item" id="right-panel-1">
-                <h3>右侧面板1</h3>
-                <div class="panel-content">数据内容1</div>
-            </div>
-            <div class="panel-item" id="right-panel-2">
-                <h3>右侧面板2</h3>
-                <div class="panel-content">数据内容2</div>
-            </div>
-            <div class="panel-item" id="right-panel-3">
-                <h3>右侧面板3</h3>
-                <div class="panel-content">数据内容3</div>
+    <!-- 主要内容区域 -->
+    <div id="main-content" style="display: none;">
+        <!-- 标题区域 -->
+        <div class="header">
+            <h1 class="main-title">AAAAA</h1>
+            <h2 class="sub-title">BBBBB</h2>
+        </div>
+        
+        <!-- 左侧容器 -->
+        <div class="left-panel">
+            <div class="panel-container">
+                <div class="panel-item" id="left-panel-1">
+                    <h3>左侧面板1</h3>
+                    <div class="panel-content">数据内容1</div>
+                </div>
+                <div class="panel-item" id="left-panel-2">
+                    <h3>左侧面板2</h3>
+                    <div class="panel-content">数据内容2</div>
+                </div>
+                <div class="panel-item" id="left-panel-3">
+                    <h3>左侧面板3</h3>
+                    <div class="panel-content">数据内容3</div>
+                </div>
             </div>
         </div>
+        
+        <!-- 右侧容器 -->
+        <div class="right-panel">
+            <div class="panel-container">
+                <div class="panel-item" id="right-panel-1">
+                    <h3>右侧面板1</h3>
+                    <div class="panel-content">数据内容1</div>
+                </div>
+                <div class="panel-item" id="right-panel-2">
+                    <h3>右侧面板2</h3>
+                    <div class="panel-content">数据内容2</div>
+                </div>
+                <div class="panel-item" id="right-panel-3">
+                    <h3>右侧面板3</h3>
+                    <div class="panel-content">数据内容3</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 中央地图容器 -->
+        <div id="map-container"></div>
     </div>
-    
-    <!-- 中央地图容器 -->
-    <div id="map-container"></div>
     
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>

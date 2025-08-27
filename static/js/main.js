@@ -130,11 +130,15 @@ function initMap() {
                         show: true,
                         textStyle: {
                             color: '#ffffff',
-                            fontSize: 14,
-                            backgroundColor: 'rgba(59, 130, 246, 0.8)',
-                            padding: [4, 8],
-                            borderRadius: 4,
-                            fontWeight: 'bold'
+                            fontSize: 18, // 强调时更大
+                            backgroundColor: 'rgba(30, 64, 175, 0.95)', // 更深的蓝色
+                            padding: [8, 16], // 更大的内边距
+                            borderRadius: 25, // 更大的圆角
+                            fontWeight: 'bold',
+                            borderColor: 'rgba(147, 197, 253, 1.0)', // 更亮的边框
+                            borderWidth: 2, // 更粗的边框
+                            shadowBlur: 10, // 添加阴影
+                            shadowColor: 'rgba(59, 130, 246, 0.5)'
                         }
                     },
                     itemStyle: {
@@ -143,15 +147,31 @@ function initMap() {
                 },
                 label: {
                     show: true,
-                    textStyle: {
-                        color: '#ffffff',
-                        fontSize: 11, // 稍微减小字体
-                        backgroundColor: 'rgba(15, 23, 42, 0.9)', // 使用深色背景
-                        padding: [2, 4], // 减小内边距
-                        borderRadius: 2,
-                        fontWeight: 'normal'
+                    formatter: function(params) {
+                        return [
+                            '{a|' + params.name + '}',
+                            '{b|●}'
+                        ].join('\n');
                     },
-                    distance: 10 // 减小距离
+                    rich: {
+                        a: {
+                            color: '#ffffff',
+                            fontSize: 16,
+                            fontWeight: 'bold',
+                            backgroundColor: 'rgba(59, 130, 246, 0.9)',
+                            padding: [6, 12],
+                            borderRadius: 20,
+                            borderColor: 'rgba(147, 197, 253, 0.8)',
+                            borderWidth: 1
+                        },
+                        b: {
+                            color: '#3b82f6',
+                            fontSize: 24,
+                            fontWeight: 'bold',
+                            textShadow: '0 0 10px #3b82f6, 0 0 20px #3b82f6, 0 0 30px #3b82f6'
+                        }
+                    },
+                    distance: 20
                 },
                 instancing: false, // 禁用实例化以减少渲染问题
                 postEffect: {
@@ -166,6 +186,35 @@ function initMap() {
         
         // 设置配置项，使用notMerge确保完全替换配置
         myChart.setOption(option, true);
+        
+        // 添加点击动画效果
+        myChart.on('click', function(params) {
+            if (params.componentType === 'geo3D') {
+                // 创建点击动画效果
+                const clickEffect = document.createElement('div');
+                clickEffect.className = 'hologram-click-effect';
+                clickEffect.style.cssText = `
+                    position: absolute;
+                    left: ${params.event.offsetX}px;
+                    top: ${params.event.offsetY}px;
+                    width: 0;
+                    height: 0;
+                    border: 2px solid #3b82f6;
+                    border-radius: 50%;
+                    pointer-events: none;
+                    z-index: 10000;
+                    animation: hologram-click 0.6s ease-out forwards;
+                `;
+                document.body.appendChild(clickEffect);
+                
+                // 移除动画元素
+                setTimeout(() => {
+                    if (clickEffect.parentNode) {
+                        clickEffect.parentNode.removeChild(clickEffect);
+                    }
+                }, 600);
+            }
+        });
         
         // 监听窗口大小变化，使用防抖优化
         let resizeTimer;
@@ -259,8 +308,76 @@ function resetView() {
     });
 }
 
+// 加载动画控制
+let loadingProgress = 0;
+let currentStep = 1;
+
+function updateLoadingProgress(progress, step) {
+    const progressFill = document.querySelector('.progress-fill');
+    const progressText = document.querySelector('.progress-text');
+    const steps = document.querySelectorAll('.step');
+    
+    // 更新进度条
+    progressFill.style.width = progress + '%';
+    progressText.textContent = Math.round(progress) + '%';
+    
+    // 更新步骤状态
+    steps.forEach((stepEl, index) => {
+        const stepNum = index + 1;
+        stepEl.classList.remove('active', 'completed');
+        
+        if (stepNum < step) {
+            stepEl.classList.add('completed');
+        } else if (stepNum === step) {
+            stepEl.classList.add('active');
+        }
+    });
+}
+
+function startLoadingAnimation() {
+    // 第一步：初始化系统 (0-25%)
+    updateLoadingProgress(0, 1);
+    
+    setTimeout(() => {
+        updateLoadingProgress(25, 2);
+        
+        // 第二步：加载地图数据 (25-50%)
+        setTimeout(() => {
+            updateLoadingProgress(50, 3);
+            
+            // 第三步：渲染3D场景 (50-75%)
+            setTimeout(() => {
+                updateLoadingProgress(75, 4);
+                
+                // 第四步：启动完成 (75-100%)
+                setTimeout(() => {
+                    updateLoadingProgress(100, 4);
+                    
+                    // 完成加载，显示主内容
+                    setTimeout(() => {
+                        const loadingScreen = document.getElementById('loading-screen');
+                        const mainContent = document.getElementById('main-content');
+                        
+                        loadingScreen.style.opacity = '0';
+                        setTimeout(() => {
+                            loadingScreen.style.display = 'none';
+                            mainContent.style.display = 'block';
+                            
+                            // 初始化地图
+                            initMap();
+                        }, 500);
+                    }, 500);
+                }, 800);
+            }, 1000);
+        }, 800);
+    }, 500);
+}
+
 // 页面加载完成后初始化
 document.addEventListener('DOMContentLoaded', function() {
+    // 开始加载动画
+    startLoadingAnimation();
+    
     // 添加防抖函数来优化性能
     let resizeTimer;
     window.addEventListener('resize', function() {
@@ -271,6 +388,4 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }, 100);
     });
-    
-    initMap();
 });
