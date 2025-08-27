@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>地图修复测试</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
+            font-family: Arial, sans-serif;
+        }
+        #test-container {
+            width: 100%;
+            height: 600px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            perspective: 1000px;
+            will-change: transform;
+        }
+        .info {
+            color: white;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts-gl@2.0.9/dist/echarts-gl.min.js"></script>
+</head>
+<body>
+    <div class="info">
+        <h1>地图修复测试</h1>
+        <p>测试默认颜色和缩放闪烁问题修复</p>
+    </div>
+    <div id="test-container"></div>
+    
+    <script>
+        // 测试用的简化地图配置
+        const chartDom = document.getElementById('test-container');
+        const myChart = echarts.init(chartDom, null, {
+            renderer: 'canvas',
+            useDirtyRect: false,
+            useCoarsePointer: false
+        });
+        
+        // 模拟数据
+        const testData = {
+            "type": "FeatureCollection",
+            "features": [
+                {
+                    "type": "Feature",
+                    "properties": {"name": "测试区域1"},
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [[[120, 29], [120.1, 29], [120.1, 29.1], [120, 29.1], [120, 29]]]
+                    }
+                },
+                {
+                    "type": "Feature", 
+                    "properties": {"name": "测试区域2"},
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [[[120.1, 29], [120.2, 29], [120.2, 29.1], [120.1, 29.1], [120.1, 29]]]
+                    }
+                }
+            ]
+        };
+        
+        echarts.registerMap('test', testData);
+        
+        const option = {
+            backgroundColor: 'transparent',
+            geo3D: {
+                map: 'test',
+                boxHeight: 20,
+                regionHeight: 3,
+                shading: 'lambert',
+                itemStyle: {
+                    color: 'rgba(135, 206, 250, 0.8)',
+                    opacity: 0.9,
+                    borderWidth: 1.5,
+                    borderColor: 'rgba(255, 255, 255, 0.8)'
+                },
+                viewControl: {
+                    alpha: 45,
+                    beta: 40,
+                    distance: 130,
+                    zoomSensitivity: 0.3,
+                    damping: 0.95
+                },
+                postEffect: {
+                    enable: true,
+                    SSAO: {
+                        enable: false
+                    }
+                },
+                temporalSuperSampling: {
+                    enable: false
+                }
+            }
+        };
+        
+        myChart.setOption(option);
+        
+        // 防抖的resize处理
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                myChart.resize();
+            }, 150);
+        });
+    </script>
+</body>
+</html>

@@ -7,8 +7,12 @@ function initMap() {
     // 获取容器
     const chartDom = document.getElementById('map-container');
     
-    // 初始化ECharts实例
-    myChart = echarts.init(chartDom);
+            // 初始化ECharts实例
+        myChart = echarts.init(chartDom, null, {
+            renderer: 'canvas',
+            useDirtyRect: false, // 禁用脏矩形优化以减少闪烁
+            useCoarsePointer: false // 禁用粗指针以减少渲染问题
+        });
     
     // 显示加载动画
     myChart.showLoading({
@@ -91,10 +95,6 @@ function initMap() {
                 boxHeight: 20,
                 regionHeight: 3,
                 shading: 'lambert',
-                realisticMaterial: {
-                    roughness: 0.7,
-                    metalness: 0.2
-                },
                 environment: 'none',
                 groundPlane: {
                     show: true,
@@ -103,13 +103,13 @@ function initMap() {
                 light: {
                     main: {
                         color: '#ffffff',
-                        intensity: 1.0,
-                        shadow: true,
-                        alpha: 40,
+                        intensity: 0.8, // 降低主光源强度
+                        shadow: false,
+                        alpha: 45, // 调整光照角度
                         beta: 30
                     },
                     ambient: {
-                        intensity: 0.6
+                        intensity: 0.7 // 降低环境光强度
                     }
                 },
                 viewControl: {
@@ -117,9 +117,9 @@ function initMap() {
                     alpha: 45,
                     beta: 40,
                     distance: 130,
-                    panSensitivity: 1,
-                    rotateSensitivity: 1,
-                    zoomSensitivity: 0.5,
+                    panSensitivity: 0.5, // 进一步降低平移敏感度
+                    rotateSensitivity: 0.5, // 进一步降低旋转敏感度
+                    zoomSensitivity: 0.2, // 进一步降低缩放敏感度
                     autoRotate: false,
                     minAlpha: 10,
                     maxAlpha: 80,
@@ -127,13 +127,18 @@ function initMap() {
                     maxBeta: 80,
                     minDistance: 80,
                     maxDistance: 200,
-                    damping: 0.9,
-                    enableZoom: true
+                    damping: 0.98, // 进一步增加阻尼
+                    enableZoom: true,
+                    enableRotate: true,
+                    enablePan: true
                 },
                 itemStyle: {
-                    opacity: 0.9,
-                    borderWidth: 1.5,
-                    borderColor: 'rgba(255, 255, 255, 0.8)'
+                    color: 'rgba(135, 206, 250, 1.0)', // 上部表面保持淡蓝色
+                    opacity: 1.0, // 使用完全不透明
+                    borderWidth: 1, // 恢复边框但使用更细的线条
+                    borderColor: 'rgba(255, 255, 255, 1.0)', // 使用不透明的白色边框
+                    // 侧面使用不同的颜色
+                    sideColor: 'rgba(100, 140, 180, 1.0)' // 侧面使用稍深的蓝色
                 },
                 emphasis: {
                     label: {
@@ -155,76 +160,49 @@ function initMap() {
                     show: true,
                     textStyle: {
                         color: '#4A00E0',
-                        fontSize: 12,
-                        backgroundColor: 'rgba(255, 255, 255, 0.7)',
-                        padding: [3, 6],
-                        borderRadius: 3,
+                        fontSize: 11, // 稍微减小字体
+                        backgroundColor: 'rgba(255, 255, 255, 0.9)', // 使用更不透明的背景
+                        padding: [2, 4], // 减小内边距
+                        borderRadius: 2,
                         fontWeight: 'normal'
                     },
-                    distance: 12
+                    distance: 10 // 减小距离
                 },
-                instancing: true,
+                instancing: false, // 禁用实例化以减少渲染问题
                 postEffect: {
-                    enable: true,
-                    SSAO: {
-                        enable: true,
-                        radius: 1.5,
-                        intensity: 0.8
-                    }
+                    enable: false // 完全禁用后处理效果
                 },
                 temporalSuperSampling: {
-                    enable: true
+                    enable: false // 禁用时间超采样以减少闪烁
                 }
             },
-            series: [{
-                type: 'bar3D',
-                coordinateSystem: 'geo3D',
-                shading: 'lambert',
-                realisticMaterial: {
-                    roughness: 0.6,
-                    metalness: 0.3
-                },
-                data: geoJson.features.map((feature, idx) => {
-                    const center = getCenterOfFeature(feature);
-                    const name = feature.properties.name;
-                    const value = dataMap[name] ? dataMap[name].value : 50;
-                    return {
-                        name: name,
-                        value: [center[0], center[1], value / 2],
-                        itemStyle: {
-                            color: getColorByValue(value)
-                        }
-                    };
-                }),
-                barSize: [2, 2],
-                minHeight: 1,
-                itemStyle: {
-                    opacity: 0.95
-                },
-                emphasis: {
-                    label: {
-                        show: true,
-                        formatter: '{b}',
-                        textStyle: {
-                            color: '#ffffff',
-                            fontSize: 14,
-                            fontWeight: 'bold'
-                        }
-                    }
-                },
-                instancing: true
-            }]
+            series: [] // 移除bar3D系列以避免与geo3D冲突
         };
         
-        // 设置配置项
-        myChart.setOption(option);
+        // 设置配置项，使用notMerge确保完全替换配置
+        myChart.setOption(option, true);
         
-        // 监听窗口大小变化
+        // 监听窗口大小变化，使用防抖优化
+        let resizeTimer;
         window.addEventListener('resize', () => {
-            if (myChart) {
-                myChart.resize();
-            }
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                if (myChart) {
+                    myChart.resize();
+                }
+            }, 200); // 进一步增加防抖延迟
         });
+        
+        // 添加渲染优化
+        if (myChart && myChart.getZr) {
+            const zr = myChart.getZr();
+            if (zr) {
+                zr.configLayer(0, {
+                    motionBlur: false, // 禁用运动模糊
+                    useDirtyRect: false // 禁用脏矩形优化
+                });
+            }
+        }
         
     }).catch(error => {
         console.error('数据加载失败:', error);
@@ -244,30 +222,7 @@ function initMap() {
     });
 }
 
-// 计算GeoJSON特征的中心点
-function getCenterOfFeature(feature) {
-    try {
-        const coordinates = feature.geometry.coordinates[0];
-        let sumX = 0, sumY = 0;
-        const len = coordinates.length;
-        for (let i = 0; i < len; i++) {
-            sumX += coordinates[i][0];
-            sumY += coordinates[i][1];
-        }
-        return [sumX / len, sumY / len];
-    } catch (error) {
-        return [120, 30]; // 金华市大概的经纬度
-    }
-}
 
-// 根据数值获取颜色
-function getColorByValue(value) {
-    if (value < 20) return '#4A00E0';
-    else if (value < 40) return '#6A11CB';
-    else if (value < 60) return '#8E2DE2';
-    else if (value < 80) return '#B721FF';
-    else return '#DC2430';
-}
 
 // 旋转视角
 function rotateView() {

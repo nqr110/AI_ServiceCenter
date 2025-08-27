@@ -45,6 +45,11 @@ header p {
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.3);
     overflow: hidden;
+    /* 优化渲染性能 */
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+    will-change: transform;
 }
 
 .controls {
