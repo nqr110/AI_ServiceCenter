@@ -19,12 +19,13 @@ body {
     transform: translateX(-50%);
     z-index: 1000;
     text-align: center;
-    padding: 15px 30px;
+    padding: 15px 30px 25px 30px;
     background: linear-gradient(90deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 64, 175, 0.95) 50%, rgba(15, 23, 42, 0.95) 100%);
     backdrop-filter: blur(15px);
-    border-radius: 50px;
+    border-radius: 15px 15px 0 0;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     min-width: 400px;
+    clip-path: polygon(0 0, 100% 0, 85% 100%, 15% 100%);
 }
 
 .main-title {
