@@ -6,9 +6,9 @@
 
 body {
     font-family: 'Microsoft YaHei', Arial, sans-serif;
-    background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
+    background: #0f172a;
     min-height: 100vh;
-    color: #333333;
+    color: #ffffff;
 }
 
 .container {
@@ -40,10 +40,10 @@ header p {
 #map-container {
     width: 100%;
     height: 700px;
-    background: rgba(255, 255, 255, 0.95);
+    background: #0f172a;
     border-radius: 15px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(59, 130, 246, 0.3);
     overflow: hidden;
     /* 优化渲染性能 */
     transform: translateZ(0);
@@ -64,20 +64,20 @@ header p {
 .controls button {
     padding: 12px 24px;
     font-size: 16px;
-    background: linear-gradient(45deg, #4A00E0 0%, #8E2DE2 100%);
+    background: linear-gradient(45deg, #1e40af 0%, #3b82f6 100%);
     color: white;
     border: none;
     border-radius: 25px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     font-weight: 500;
     letter-spacing: 0.5px;
 }
 
 .controls button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(142, 45, 226, 0.4);
+    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
 }
 
 .controls button:active {
@@ -85,12 +85,13 @@ header p {
 }
 
 .info {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(59, 130, 246, 0.2);
     padding: 15px 25px;
     border-radius: 10px;
     color: #ffffff;
     font-size: 14px;
     backdrop-filter: blur(10px);
+    border: 1px solid rgba(59, 130, 246, 0.3);
 }
 
 .info p {

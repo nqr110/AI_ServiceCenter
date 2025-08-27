@@ -17,9 +17,9 @@ function initMap() {
     // 显示加载动画
     myChart.showLoading({
         text: '数据加载中...',
-        color: '#8E2DE2',
-        textColor: '#4A00E0',
-        maskColor: 'rgba(255, 255, 255, 0.8)',
+        color: '#3b82f6',
+        textColor: '#1e40af',
+        maskColor: 'rgba(15, 23, 42, 0.8)',
         zlevel: 0
     });
     
@@ -41,19 +41,19 @@ function initMap() {
         
         // 配置选项
         const option = {
-            backgroundColor: 'transparent',
+            backgroundColor: '#0f172a',
             title: {
                 text: '金华市立体地图',
                 subtext: 'Jinhua 3D Map Visualization',
                 left: 'center',
                 top: 20,
                 textStyle: {
-                    color: '#4A00E0',
+                    color: '#ffffff',
                     fontSize: 24,
                     fontWeight: 'normal'
                 },
                 subtextStyle: {
-                    color: '#8E2DE2',
+                    color: '#93c5fd',
                     fontSize: 14
                 }
             },
@@ -63,14 +63,14 @@ function initMap() {
                     const data = dataMap[params.name];
                     if (data) {
                         return `
-                            <div style="padding: 12px; background: rgba(255, 255, 255, 0.95); border-radius: 6px; border-left: 3px solid #8E2DE2; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
-                                <div style="font-size: 16px; font-weight: bold; margin-bottom: 8px; color: #333;">${params.name}</div>
-                                <div style="color: #666; margin-bottom: 4px;">发展指数: <span style="color: #4A00E0; font-weight: bold;">${data.value}</span></div>
-                                <div style="color: #888;">人口: <span style="color: #8E2DE2;">${(data.population/10000).toFixed(1)}</span> 万人</div>
+                            <div style="padding: 12px; background: rgba(15, 23, 42, 0.95); border-radius: 6px; border-left: 3px solid #3b82f6; box-shadow: 0 2px 10px rgba(0,0,0,0.3);">
+                                <div style="font-size: 16px; font-weight: bold; margin-bottom: 8px; color: #ffffff;">${params.name}</div>
+                                <div style="color: #93c5fd; margin-bottom: 4px;">发展指数: <span style="color: #60a5fa; font-weight: bold;">${data.value}</span></div>
+                                <div style="color: #cbd5e1;">人口: <span style="color: #3b82f6;">${(data.population/10000).toFixed(1)}</span> 万人</div>
                             </div>
                         `;
                     }
-                    return `<div style="padding: 10px; color: #333;">${params.name}</div>`;
+                    return `<div style="padding: 10px; color: #ffffff;">${params.name}</div>`;
                 },
                 backgroundColor: 'transparent',
                 borderColor: 'transparent',
@@ -87,7 +87,7 @@ function initMap() {
                 max: 100,
                 calculable: false,
                 inRange: {
-                    color: ['#4A00E0', '#6A11CB', '#8E2DE2', '#B721FF']
+                    color: ['#1e40af', '#3b82f6', '#60a5fa', '#93c5fd']
                 }
             },
             geo3D: {
@@ -97,8 +97,7 @@ function initMap() {
                 shading: 'lambert',
                 environment: 'none',
                 groundPlane: {
-                    show: true,
-                    color: 'rgba(200, 200, 255, 0.2)'
+                    show: false
                 },
                 light: {
                     main: {
@@ -133,12 +132,12 @@ function initMap() {
                     enablePan: true
                 },
                 itemStyle: {
-                    color: 'rgba(135, 206, 250, 1.0)', // 上部表面保持淡蓝色
+                    color: 'rgba(59, 130, 246, 1.0)', // 上部表面使用深蓝色
                     opacity: 1.0, // 使用完全不透明
                     borderWidth: 1, // 恢复边框但使用更细的线条
-                    borderColor: 'rgba(255, 255, 255, 1.0)', // 使用不透明的白色边框
+                    borderColor: 'rgba(147, 197, 253, 1.0)', // 使用浅蓝色边框
                     // 侧面使用不同的颜色
-                    sideColor: 'rgba(100, 140, 180, 1.0)' // 侧面使用稍深的蓝色
+                    sideColor: 'rgba(30, 64, 175, 1.0)' // 侧面使用更深的蓝色
                 },
                 emphasis: {
                     label: {
@@ -146,22 +145,22 @@ function initMap() {
                         textStyle: {
                             color: '#ffffff',
                             fontSize: 14,
-                            backgroundColor: 'rgba(74, 0, 224, 0.8)',
+                            backgroundColor: 'rgba(59, 130, 246, 0.8)',
                             padding: [4, 8],
                             borderRadius: 4,
                             fontWeight: 'bold'
                         }
                     },
                     itemStyle: {
-                        color: '#B721FF'
+                        color: '#60a5fa'
                     }
                 },
                 label: {
                     show: true,
                     textStyle: {
-                        color: '#4A00E0',
+                        color: '#ffffff',
                         fontSize: 11, // 稍微减小字体
-                        backgroundColor: 'rgba(255, 255, 255, 0.9)', // 使用更不透明的背景
+                        backgroundColor: 'rgba(15, 23, 42, 0.9)', // 使用深色背景
                         padding: [2, 4], // 减小内边距
                         borderRadius: 2,
                         fontWeight: 'normal'
