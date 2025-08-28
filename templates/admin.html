@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>地块状态管理后台</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Microsoft YaHei", Arial, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+      }
+
+      .header {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        color: white;
+        padding: 30px;
+        text-align: center;
+      }
+
+      .header h1 {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .header p {
+        font-size: 1.2em;
+        opacity: 0.9;
+      }
+
+      .status-info {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin: 20px 0;
+      }
+
+      .status-legend {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 1.1em;
+      }
+
+      .status-dot {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        display: inline-block;
+      }
+
+      .status-dot.normal {
+        background-color: #5698c3;
+        box-shadow: 0 0 10px rgba(86, 152, 195, 0.6);
+      }
+
+      .status-dot.warning {
+        background-color: #ffc107;
+        box-shadow: 0 0 10px rgba(255, 193, 7, 0.6);
+      }
+
+      .content {
+        padding: 40px;
+      }
+
+      .district-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 25px;
+        margin-top: 30px;
+      }
+
+      .district-card {
+        background: white;
+        border-radius: 12px;
+        padding: 25px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+      }
+
+      .district-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      .district-card.normal {
+        border-color: #5698c3;
+      }
+
+      .district-card.warning {
+        border-color: #ffc107;
+      }
+
+      .district-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .district-name {
+        font-size: 1.4em;
+        font-weight: bold;
+        color: #333;
+      }
+
+      .district-code {
+        background: #f8f9fa;
+        color: #6c757d;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.9em;
+        font-weight: bold;
+      }
+
+      .status-current {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 20px;
+        font-size: 1.1em;
+      }
+
+      .status-badge {
+        padding: 6px 16px;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 0.9em;
+      }
+
+      .status-badge.normal {
+        background-color: #d1ecf1;
+        color: #0c5460;
+      }
+
+      .status-badge.warning {
+        background-color: #fff3cd;
+        color: #856404;
+      }
+
+      .control-buttons {
+        display: flex;
+        gap: 12px;
+      }
+
+      .btn {
+        flex: 1;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1em;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .btn-normal {
+        background-color: #5698c3;
+        color: white;
+      }
+
+      .btn-normal:hover {
+        background-color: #4a85a8;
+      }
+
+      .btn-warning {
+        background-color: #ffc107;
+        color: #333;
+      }
+
+      .btn-warning:hover {
+        background-color: #e0a800;
+      }
+
+      .btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .btn:disabled:hover {
+        transform: none;
+        box-shadow: none;
+      }
+
+      .connection-status {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 10px 20px;
+        border-radius: 25px;
+        font-weight: bold;
+        z-index: 1000;
+        transition: all 0.3s ease;
+      }
+
+      .connection-status.connected {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+      }
+
+      .connection-status.disconnected {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+      }
+
+      .loading {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #333;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-left: 10px;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .notification {
+        position: fixed;
+        top: 80px;
+        right: 20px;
+        padding: 15px 20px;
+        border-radius: 8px;
+        color: white;
+        font-weight: bold;
+        z-index: 1001;
+        transform: translateX(400px);
+        transition: transform 0.3s ease;
+      }
+
+      .notification.show {
+        transform: translateX(0);
+      }
+
+      .notification.success {
+        background-color: #28a745;
+      }
+
+      .notification.error {
+        background-color: #dc3545;
+      }
+
+      @media (max-width: 768px) {
+        .district-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .container {
+          margin: 10px;
+        }
+
+        .header h1 {
+          font-size: 2em;
+        }
+
+        .status-info {
+          flex-direction: column;
+          gap: 15px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="connection-status" id="connectionStatus">
+      <span id="statusText">连接中...</span>
+    </div>
+
+    <div class="notification" id="notification"></div>
+
+    <div class="container">
+      <div class="header">
+        <h1>🗺️ 地块状态管理后台</h1>
+        <p>实时控制金华市各地块的状态显示</p>
+        <div class="status-info">
+          <div class="status-legend">
+            <div class="status-dot normal"></div>
+            <span>正常状态（蓝色）</span>
+          </div>
+          <div class="status-legend">
+            <div class="status-dot warning"></div>
+            <span>警告状态（黄色）</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="district-grid" id="districtGrid">
+          <!-- 地块卡片将通过JavaScript动态生成 -->
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script>
+      // 地名映射
+      const districtNames = {
+        A地: "A市",
+        B地: "B市",
+        C地: "C市",
+        D地: "D市",
+        E地: "E市",
+        F地: "F市",
+        G地: "G市",
+        H地: "H市",
+        I地: "I市",
+      };
+
+      // WebSocket连接
+      const socket = io();
+      let currentStatus = {};
+
+      // 连接状态管理
+      socket.on("connect", function () {
+        console.log("已连接到服务器");
+        updateConnectionStatus(true);
+        socket.emit("join_admin");
+        loadDistrictStatus();
+      });
+
+      socket.on("disconnect", function () {
+        console.log("与服务器断开连接");
+        updateConnectionStatus(false);
+      });
+
+      // 更新连接状态显示
+      function updateConnectionStatus(connected) {
+        const statusEl = document.getElementById("connectionStatus");
+        const textEl = document.getElementById("statusText");
+
+        if (connected) {
+          statusEl.className = "connection-status connected";
+          textEl.textContent = "✓ 已连接";
+        } else {
+          statusEl.className = "connection-status disconnected";
+          textEl.textContent = "✗ 连接断开";
+        }
+      }
+
+      // 显示通知
+      function showNotification(message, type = "success") {
+        const notification = document.getElementById("notification");
+        notification.textContent = message;
+        notification.className = `notification ${type} show`;
+
+        setTimeout(() => {
+          notification.classList.remove("show");
+        }, 3000);
+      }
+
+      // 加载地块状态
+      async function loadDistrictStatus() {
+        try {
+          const response = await fetch("/api/district-status");
+          const data = await response.json();
+          currentStatus = data;
+          renderDistrictCards();
+        } catch (error) {
+          console.error("加载地块状态失败:", error);
+          showNotification("加载地块状态失败", "error");
+        }
+      }
+
+      // 渲染地块卡片
+      function renderDistrictCards() {
+        const grid = document.getElementById("districtGrid");
+        grid.innerHTML = "";
+
+        Object.keys(currentStatus).forEach((district) => {
+          const status = currentStatus[district];
+          const card = createDistrictCard(district, status);
+          grid.appendChild(card);
+        });
+      }
+
+      // 创建地块卡片
+      function createDistrictCard(district, status) {
+        const card = document.createElement("div");
+        card.className = `district-card ${status.status}`;
+        card.innerHTML = `
+                <div class="district-header">
+                    <div class="district-name">${districtNames[district]}</div>
+                    <div class="district-code">${district}</div>
+                </div>
+                <div class="status-current">
+                    <div class="status-dot ${status.status}"></div>
+                    <span>当前状态：</span>
+                    <div class="status-badge ${status.status}">
+                        ${status.status === "normal" ? "正常" : "警告"}
+                    </div>
+                </div>
+                <div class="control-buttons">
+                    <button class="btn btn-normal" 
+                            onclick="updateStatus('${district}', 'normal')"
+                            ${status.status === "normal" ? "disabled" : ""}>
+                        设为正常
+                    </button>
+                    <button class="btn btn-warning" 
+                            onclick="updateStatus('${district}', 'warning')"
+                            ${status.status === "warning" ? "disabled" : ""}>
+                        设为警告
+                    </button>
+                </div>
+            `;
+        return card;
+      }
+
+      // 更新地块状态
+      async function updateStatus(district, newStatus) {
+        try {
+          // 显示加载状态
+          const buttons = document.querySelectorAll(`[onclick*="${district}"]`);
+          buttons.forEach((btn) => {
+            btn.disabled = true;
+            btn.innerHTML += '<div class="loading"></div>';
+          });
+
+          const response = await fetch("/api/update-status", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              district: district,
+              status: newStatus,
+            }),
+          });
+
+          const result = await response.json();
+
+          if (result.success) {
+            currentStatus[district] = {
+              status: newStatus,
+              color: result.color,
+            };
+            renderDistrictCards();
+            showNotification(
+              `${districtNames[district]} 状态已更新为${
+                newStatus === "normal" ? "正常" : "警告"
+              }`
+            );
+          } else {
+            throw new Error(result.error || "更新失败");
+          }
+        } catch (error) {
+          console.error("更新状态失败:", error);
+          showNotification("状态更新失败: " + error.message, "error");
+          // 重新加载状态以恢复正确的UI
+          loadDistrictStatus();
+        }
+      }
+
+      // 页面加载完成后初始化
+      document.addEventListener("DOMContentLoaded", function () {
+        console.log("后台管理页面已加载");
+      });
+    </script>
+  </body>
+</html>

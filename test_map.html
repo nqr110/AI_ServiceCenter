@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>地图测试</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts-gl@2.0.9/dist/echarts-gl.min.js"></script>
+  </head>
+  <body>
+    <div
+      id="test-container"
+      style="width: 800px; height: 600px; border: 1px solid #ccc"
+    ></div>
+
+    <script>
+      // 简单的地图测试
+      const chartDom = document.getElementById("test-container");
+      const myChart = echarts.init(chartDom, null, {
+        renderer: "canvas",
+        useDirtyRect: false,
+      });
+
+      // 测试数据加载
+      Promise.all([
+        fetch("/api/jinhua-geojson").then((response) => response.json()),
+        fetch("/api/district-data").then((response) => response.json()),
+      ])
+        .then(([geoJson, districtData]) => {
+          console.log("测试: 数据加载成功");
+          console.log("GeoJSON:", geoJson);
+          console.log("District Data:", districtData);
+
+          // 注册地图
+          echarts.registerMap("jinhua", geoJson);
+
+          // 配置简单地图
+          const option = {
+            backgroundColor: "#0f172a",
+            geo3D: {
+              map: "jinhua",
+              boxHeight: 20,
+              regionHeight: 3,
+              shading: "lambert",
+              environment: "none",
+              light: {
+                main: {
+                  color: "#ffffff",
+                  intensity: 0.8,
+                  shadow: false,
+                  alpha: 45,
+                  beta: 30,
+                },
+                ambient: {
+                  intensity: 0.7,
+                },
+              },
+              viewControl: {
+                projection: "perspective",
+                alpha: 45,
+                beta: 40,
+                distance: 130,
+                panSensitivity: 0.5,
+                rotateSensitivity: 0.5,
+                zoomSensitivity: 0.2,
+                autoRotate: false,
+                damping: 0.98,
+                enableZoom: true,
+                enableRotate: true,
+                enablePan: true,
+              },
+              itemStyle: {
+                color: "rgba(59, 130, 246, 1.0)",
+                opacity: 1.0,
+                borderWidth: 1,
+                borderColor: "rgba(147, 197, 253, 1.0)",
+                sideColor: "rgba(30, 64, 175, 1.0)",
+              },
+              label: {
+                show: true,
+                formatter: function (params) {
+                  return params.name;
+                },
+                rich: {
+                  a: {
+                    color: "#ffffff",
+                    fontSize: 16,
+                    fontWeight: "bold",
+                    backgroundColor: "rgba(59, 130, 246, 0.9)",
+                    padding: [6, 12],
+                    borderRadius: 20,
+                    borderColor: "rgba(147, 197, 253, 0.8)",
+                    borderWidth: 1,
+                  },
+                },
+              },
+            },
+          };
+
+          myChart.setOption(option, true);
+          console.log("测试: 地图配置成功");
+        })
+        .catch((error) => {
+          console.error("测试: 数据加载失败:", error);
+          myChart.setOption({
+            title: {
+              text: "数据加载失败",
+              textStyle: {
+                color: "#ff4757",
+                fontSize: 20,
+              },
+              left: "center",
+              top: "center",
+            },
+            backgroundColor: "rgba(255, 255, 255, 0.95)",
+          });
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>点击功能测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f0f0f0;
+        }
+        .test-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .status {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #28a745;
+            margin-bottom: 20px;
+        }
+        .instructions {
+            background: #d1ecf1;
+            color: #0c5460;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #17a2b8;
+            margin-bottom: 20px;
+        }
+        .iframe-container {
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        iframe {
+            width: 100%;
+            height: 700px;
+            border: none;
+        }
+        .button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🎯 金华市立体地图 - 点击功能测试</h1>
+        
+        <div class="status">
+            <h3>✅ 修复状态</h3>
+            <p>已修复数据加载失败问题，现在可以正常测试点击功能了。</p>
+            <ul>
+                <li>✅ 修复了地块名称映射问题（A地 → A）</li>
+                <li>✅ 修复了数据加载失败问题</li>
+                <li>✅ 添加了调试信息输出</li>
+                <li>✅ 完善了点击事件处理</li>
+            </ul>
+        </div>
+        
+        <div class="instructions">
+            <h3>📋 测试步骤</h3>
+            <ol>
+                <li>点击下方的"打开主应用"按钮</li>
+                <li>等待加载动画完成，地图显示出来</li>
+                <li>地图上会显示标注为字母A-I的地块</li>
+                <li>点击任意地块，应该会弹出详细信息模态框</li>
+                <li>可以通过点击X按钮、空白区域或按ESC键关闭模态框</li>
+                <li>打开浏览器开发者工具（F12）查看控制台调试信息</li>
+            </ol>
+        </div>
+        
+        <div>
+            <button class="button" onclick="openMainApp()">打开主应用</button>
+            <button class="button" onclick="openDirect()">直接访问</button>
+        </div>
+    </div>
+    
+    <div class="iframe-container" id="iframe-container" style="display: none;">
+        <iframe id="main-app" src="http://localhost:5000"></iframe>
+    </div>
+    
+    <script>
+        function openMainApp() {
+            document.getElementById('iframe-container').style.display = 'block';
+            document.getElementById('iframe-container').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function openDirect() {
+            window.open('http://localhost:5000', '_blank');
+        }
+        
+        // 页面加载完成后的提示
+        window.addEventListener('load', function() {
+            console.log('测试页面已加载完成');
+        });
+    </script>
+</body>
+</html>

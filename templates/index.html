@@ -1,84 +1,131 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>金华市立体地图 | Jinhua 3D Map</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/echarts-gl@2.0.9/dist/echarts-gl.min.js"></script>
-</head>
-<body>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  </head>
+  <body>
     <!-- 加载动画 -->
     <div id="loading-screen">
-        <div class="loading-container">
-            <div class="loading-logo">
-                <div class="hologram-sphere"></div>
-                <div class="loading-text">系统启动中...</div>
-            </div>
-            <div class="loading-progress">
-                <div class="progress-bar">
-                    <div class="progress-fill"></div>
-                </div>
-                <div class="progress-text">0%</div>
-            </div>
-            <div class="loading-steps">
-                <div class="step" data-step="1">初始化系统...</div>
-                <div class="step" data-step="2">加载地图数据...</div>
-                <div class="step" data-step="3">渲染3D场景...</div>
-                <div class="step" data-step="4">启动完成</div>
-            </div>
+      <div class="loading-container">
+        <div class="loading-logo">
+          <div class="hologram-sphere"></div>
+          <div class="loading-text">系统启动中...</div>
         </div>
+        <div class="loading-progress">
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+          <div class="progress-text">0%</div>
+        </div>
+        <div class="loading-steps">
+          <div class="step" data-step="1">初始化系统...</div>
+          <div class="step" data-step="2">加载地图数据...</div>
+          <div class="step" data-step="3">渲染3D场景...</div>
+          <div class="step" data-step="4">启动完成</div>
+        </div>
+      </div>
     </div>
-    
+
     <!-- 主要内容区域 -->
-    <div id="main-content" style="display: none;">
-        <!-- 标题区域 -->
-        <div class="header">
-            <h1 class="main-title">AAAAA</h1>
-            <h2 class="sub-title">BBBBB</h2>
+    <div id="main-content" style="display: none">
+      <!-- 标题区域 -->
+      <div class="header">
+        <h1 class="main-title">AAAAA</h1>
+        <h2 class="sub-title">BBBBB</h2>
+      </div>
+
+      <!-- 左侧容器 -->
+      <div class="left-panel">
+        <div class="panel-container">
+          <div class="panel-item" id="left-panel-1">
+            <h3>左侧面板1</h3>
+            <div class="panel-content">数据内容1</div>
+          </div>
+          <div class="panel-item" id="left-panel-2">
+            <h3>左侧面板2</h3>
+            <div class="panel-content">数据内容2</div>
+          </div>
+          <div class="panel-item" id="left-panel-3">
+            <h3>左侧面板3</h3>
+            <div class="panel-content">数据内容3</div>
+          </div>
         </div>
-        
-        <!-- 左侧容器 -->
-        <div class="left-panel">
-            <div class="panel-container">
-                <div class="panel-item" id="left-panel-1">
-                    <h3>左侧面板1</h3>
-                    <div class="panel-content">数据内容1</div>
-                </div>
-                <div class="panel-item" id="left-panel-2">
-                    <h3>左侧面板2</h3>
-                    <div class="panel-content">数据内容2</div>
-                </div>
-                <div class="panel-item" id="left-panel-3">
-                    <h3>左侧面板3</h3>
-                    <div class="panel-content">数据内容3</div>
-                </div>
-            </div>
+      </div>
+
+      <!-- 右侧容器 -->
+      <div class="right-panel">
+        <div class="panel-container">
+          <div class="panel-item" id="right-panel-1">
+            <h3>右侧面板1</h3>
+            <div class="panel-content">数据内容1</div>
+          </div>
+          <div class="panel-item" id="right-panel-2">
+            <h3>右侧面板2</h3>
+            <div class="panel-content">数据内容2</div>
+          </div>
+          <div class="panel-item" id="right-panel-3">
+            <h3>右侧面板3</h3>
+            <div class="panel-content">数据内容3</div>
+          </div>
         </div>
-        
-        <!-- 右侧容器 -->
-        <div class="right-panel">
-            <div class="panel-container">
-                <div class="panel-item" id="right-panel-1">
-                    <h3>右侧面板1</h3>
-                    <div class="panel-content">数据内容1</div>
-                </div>
-                <div class="panel-item" id="right-panel-2">
-                    <h3>右侧面板2</h3>
-                    <div class="panel-content">数据内容2</div>
-                </div>
-                <div class="panel-item" id="right-panel-3">
-                    <h3>右侧面板3</h3>
-                    <div class="panel-content">数据内容3</div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- 中央地图容器 -->
-        <div id="map-container"></div>
+      </div>
+
+      <!-- 中央地图容器 -->
+      <div id="map-container"></div>
+
+      <!-- 重置视角按钮 -->
+      <button id="reset-view-btn" class="reset-view-button" title="重置视角">
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M12 2V6L16 2L12 2Z" fill="currentColor" />
+          <path d="M12 18V22L8 18H12Z" fill="currentColor" />
+          <path
+            d="M4.93 4.93L7.76 7.76L6.34 9.17L4.93 7.76C3.12 9.57 2 12.15 2 15C2 18.87 5.13 22 9 22C11.85 22 14.43 20.88 16.24 19.07L17.66 20.49C15.44 22.71 12.38 24 9 24C4.03 24 0 19.97 0 15C0 11.62 1.29 8.56 3.51 6.34L4.93 4.93Z"
+            fill="currentColor"
+          />
+          <path
+            d="M15 2C19.97 2 24 6.03 24 11C24 14.38 22.71 17.44 20.49 19.66L19.07 18.24C20.88 16.43 22 13.85 22 11C22 7.13 18.87 4 15 4C12.15 4 9.57 5.12 7.76 6.93L6.34 5.51C8.56 3.29 11.62 2 15 2Z"
+            fill="currentColor"
+          />
+        </svg>
+        <span>重置视角</span>
+      </button>
+
+      <!-- 调试菜单 -->
+      <div id="debug-menu">
+        <h3>调试信息</h3>
+        <div id="debug-output">等待操作...</div>
+      </div>
     </div>
-    
+
+    <!-- 子页面模态框 -->
+    <div id="district-modal" class="modal-overlay">
+      <div class="modal-backdrop"></div>
+      <div class="modal-container">
+        <div class="modal-header">
+          <h2 class="modal-title" id="modal-title">地块详情</h2>
+          <button class="modal-close" id="modal-close">&times;</button>
+        </div>
+        <div class="modal-content" id="modal-content">
+          <!-- 动态内容将在这里加载 -->
+        </div>
+      </div>
+    </div>
+
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-</body>
+  </body>
 </html>
