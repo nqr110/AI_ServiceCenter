@@ -12,32 +12,34 @@
       }
 
       body {
-        font-family: "Microsoft YaHei", Arial, sans-serif;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+        background: #f6f8fa;
         min-height: 100vh;
         padding: 20px;
+        color: #24292e;
       }
 
       .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 15px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        width: 100%;
+        background: #ffffff;
+        border-radius: 6px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+        border: 1px solid #e1e4e8;
         overflow: hidden;
       }
 
       .header {
-        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-        color: white;
-        padding: 30px;
+        background: #ffffff;
+        color: #24292e;
+        padding: 16px;
         text-align: center;
+        border-bottom: 1px solid #e1e4e8;
       }
 
       .header h1 {
-        font-size: 2.5em;
-        margin-bottom: 10px;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        font-size: 1.5em;
+        margin-bottom: 8px;
+        font-weight: 600;
       }
 
       .header p {
@@ -49,56 +51,102 @@
         display: flex;
         justify-content: center;
         gap: 30px;
-        margin: 20px 0;
+        margin: 24px 0;
       }
 
       .status-legend {
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 10px;
         font-size: 1.1em;
+        padding: 6px 12px;
+        background-color: #f6f8fa;
+        border-radius: 6px;
       }
 
       .status-dot {
-        width: 16px;
-        height: 16px;
+        width: 18px;
+        height: 18px;
         border-radius: 50%;
         display: inline-block;
+        margin-right: 2px;
       }
 
       .status-dot.normal {
-        background-color: #5698c3;
-        box-shadow: 0 0 10px rgba(86, 152, 195, 0.6);
+        background-color: #2cbe4e;
+        box-shadow: none;
       }
 
       .status-dot.warning {
-        background-color: #ffc107;
-        box-shadow: 0 0 10px rgba(255, 193, 7, 0.6);
+        background-color: #f9c513;
+        box-shadow: none;
       }
 
       .content {
         padding: 40px;
       }
 
+      .bulk-actions {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 20px;
+        justify-content: center;
+      }
+
+      .btn-bulk {
+        padding: 8px 16px;
+        border: none;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        position: relative;
+      }
+
+      .btn-bulk-normal {
+        background-color: #2ea44f;
+        color: white;
+      }
+
+      .btn-bulk-normal:hover {
+        background-color: #2c974b;
+      }
+
+      .btn-bulk-warning {
+        background-color: #fb8500;
+        color: white;
+      }
+
+      .btn-bulk-warning:hover {
+        background-color: #e07600;
+      }
+
+      .btn-bulk:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
       .district-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-        gap: 25px;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 16px;
         margin-top: 30px;
       }
 
       .district-card {
         background: white;
-        border-radius: 12px;
-        padding: 25px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease;
-        border: 2px solid transparent;
+        border-radius: 6px;
+        padding: 12px 14px;
+        border: 1px solid #e1e4e8;
+        box-shadow: none;
+        width: 100%;
       }
 
       .district-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        transform: translateY(-3px);
+        box-shadow: 0 4px 8px rgba(149, 157, 165, 0.2);
+        border-color: #0366d6;
       }
 
       .district-card.normal {
@@ -113,65 +161,67 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
       }
 
       .district-name {
-        font-size: 1.4em;
+        font-size: 0.9em;
         font-weight: bold;
-        color: #333;
+        color: #24292e;
+        margin-bottom: 2px;
       }
 
       .district-code {
-        background: #f8f9fa;
-        color: #6c757d;
-        padding: 5px 12px;
-        border-radius: 20px;
-        font-size: 0.9em;
-        font-weight: bold;
+        background: #f6f8fa;
+        color: #586069;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 0.65em;
+        font-weight: 600;
+        border: 1px solid #e1e4e8;
       }
 
       .status-current {
         display: flex;
         align-items: center;
         gap: 10px;
-        margin-bottom: 20px;
-        font-size: 1.1em;
+        margin-bottom: 14px;
+        font-size: 0.75em;
       }
 
       .status-badge {
-        padding: 6px 16px;
-        border-radius: 20px;
-        font-weight: bold;
-        font-size: 0.9em;
+        padding: 3px 10px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 0.65em;
       }
 
       .status-badge.normal {
-        background-color: #d1ecf1;
-        color: #0c5460;
+        background-color: #e6ffed;
+        color: #22863a;
       }
 
       .status-badge.warning {
-        background-color: #fff3cd;
-        color: #856404;
+        background-color: #fff5b1;
+        color: #735c0f;
       }
 
       .control-buttons {
         display: flex;
-        gap: 12px;
+        gap: 8px;
+        margin-top: 8px;
       }
 
       .btn {
         flex: 1;
-        padding: 12px 20px;
-        border: none;
-        border-radius: 8px;
-        font-size: 1em;
-        font-weight: bold;
+        padding: 6px 10px;
+        border-radius: 6px;
+        font-size: 0.75em;
+        font-weight: 500;
         cursor: pointer;
-        transition: all 0.3s ease;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
+        transition: all 0.2s ease;
+        text-transform: none;
+        letter-spacing: normal;
       }
 
       .btn:hover {
@@ -180,21 +230,22 @@
       }
 
       .btn-normal {
-        background-color: #5698c3;
+        background-color: #2ea44f;
         color: white;
       }
 
       .btn-normal:hover {
-        background-color: #4a85a8;
+        background-color: #2c974b;
       }
 
       .btn-warning {
-        background-color: #ffc107;
-        color: #333;
+        background-color: #fafbfc;
+        color: #24292e;
+        border: 1px solid rgba(27, 31, 35, 0.15);
       }
 
       .btn-warning:hover {
-        background-color: #e0a800;
+        background-color: #f3f4f6;
       }
 
       .btn:disabled {
@@ -220,26 +271,26 @@
       }
 
       .connection-status.connected {
-        background-color: #d4edda;
-        color: #155724;
-        border: 1px solid #c3e6cb;
+        background-color: #f1f8ff;
+        color: #0366d6;
+        border: 1px solid #c8e1ff;
       }
 
       .connection-status.disconnected {
-        background-color: #f8d7da;
-        color: #721c24;
-        border: 1px solid #f5c6cb;
+        background-color: #ffeef0;
+        color: #d73a49;
+        border: 1px solid #ffdce0;
       }
 
       .loading {
         display: inline-block;
-        width: 20px;
-        height: 20px;
-        border: 3px solid #f3f3f3;
-        border-top: 3px solid #333;
+        width: 12px;
+        height: 12px;
+        border: 2px solid #e1e4e8;
+        border-top: 2px solid #0366d6;
         border-radius: 50%;
         animation: spin 1s linear infinite;
-        margin-left: 10px;
+        margin-left: 6px;
       }
 
       @keyframes spin {
@@ -255,10 +306,11 @@
         position: fixed;
         top: 80px;
         right: 20px;
-        padding: 15px 20px;
-        border-radius: 8px;
+        padding: 12px 16px;
+        border-radius: 6px;
         color: white;
         font-weight: bold;
+        font-size: 14px;
         z-index: 1001;
         transform: translateX(400px);
         transition: transform 0.3s ease;
@@ -269,29 +321,38 @@
       }
 
       .notification.success {
-        background-color: #28a745;
+        background-color: #2ea44f;
       }
 
       .notification.error {
-        background-color: #dc3545;
+        background-color: #d73a49;
       }
 
       @media (max-width: 768px) {
-        .district-grid {
-          grid-template-columns: 1fr;
-        }
-
         .container {
           margin: 10px;
         }
 
         .header h1 {
-          font-size: 2em;
+          font-size: 1.5em;
         }
 
         .status-info {
           flex-direction: column;
-          gap: 15px;
+          gap: 10px;
+        }
+
+        .district-grid {
+          grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+          gap: 12px;
+        }
+
+        .controls {
+          flex-direction: column;
+        }
+
+        .search-box {
+          width: 100%;
         }
       }
     </style>
@@ -320,26 +381,87 @@
       </div>
 
       <div class="content">
+        <div class="bulk-actions">
+          <button class="btn-bulk btn-bulk-normal" onclick="bulkUpdateStatus('normal')">全部设为正常</button>
+          <button class="btn-bulk btn-bulk-warning" onclick="bulkUpdateStatus('warning')">全部设为警告</button>
+        </div>
         <div class="district-grid" id="districtGrid">
           <!-- 地块卡片将通过JavaScript动态生成 -->
         </div>
       </div>
     </div>
+    </div>
 
     <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
     <script>
-      // 地名映射
-      const districtNames = {
-        A地: "A市",
-        B地: "B市",
-        C地: "C市",
-        D地: "D市",
-        E地: "E市",
-        F地: "F市",
-        G地: "G市",
-        H地: "H市",
-        I地: "I市",
-      };
+      // 地名映射 - 修改为支持区块1到区块106
+      const districtNames = {};
+      for (let i = 1; i <= 106; i++) {
+        districtNames[`区块${i}`] = `区块${i}`;
+      }
+
+      // 批量更新状态
+      async function bulkUpdateStatus(newStatus) {
+        if (!confirm(`确定要将所有显示的区块设置为${newStatus === "normal" ? "正常" : "警告"}状态吗？`)) {
+          return;
+        }
+
+        try {
+          // 禁用批量操作按钮
+          const bulkButtons = document.querySelectorAll('.btn-bulk');
+          bulkButtons.forEach(btn => {
+            btn.disabled = true;
+            if (!btn.querySelector('.loading')) {
+              btn.innerHTML += '<div class="loading"></div>';
+            }
+          });
+
+          // 批量更新所有显示的区块
+          const updatePromises = Object.keys(currentStatus).map(district => {
+            return fetch("/api/update-status", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                district: district,
+                status: newStatus,
+              }),
+            });
+          });
+
+          const responses = await Promise.all(updatePromises);
+          const results = await Promise.all(responses.map(res => res.json()));
+          
+          // 更新本地状态
+          Object.keys(currentStatus).forEach(district => {
+            const result = results.find(r => r.district === district);
+            if (result && result.success) {
+              currentStatus[district] = {
+                status: newStatus,
+                color: result.color,
+              };
+            }
+          });
+
+          renderDistrictCards();
+          showNotification(`成功将所有显示的区块设置为${newStatus === "normal" ? "正常" : "警告"}状态`);
+        } catch (error) {
+          console.error("批量更新状态失败:", error);
+          showNotification("批量更新状态失败: " + error.message, "error");
+        } finally {
+          // 重新启用批量操作按钮
+          const bulkButtons = document.querySelectorAll('.btn-bulk');
+          bulkButtons.forEach(btn => {
+            btn.disabled = false;
+            const loading = btn.querySelector('.loading');
+            if (loading) {
+              loading.remove();
+            }
+            btn.textContent = btn.classList.contains('btn-bulk-normal') ? '全部设为正常' : '全部设为警告';
+          });
+        }
+      }
 
       // WebSocket连接
       const socket = io();
@@ -419,7 +541,6 @@
                 </div>
                 <div class="status-current">
                     <div class="status-dot ${status.status}"></div>
-                    <span>当前状态：</span>
                     <div class="status-badge ${status.status}">
                         ${status.status === "normal" ? "正常" : "警告"}
                     </div>
@@ -428,12 +549,12 @@
                     <button class="btn btn-normal" 
                             onclick="updateStatus('${district}', 'normal')"
                             ${status.status === "normal" ? "disabled" : ""}>
-                        设为正常
+                        正常
                     </button>
                     <button class="btn btn-warning" 
                             onclick="updateStatus('${district}', 'warning')"
                             ${status.status === "warning" ? "disabled" : ""}>
-                        设为警告
+                        警告
                     </button>
                 </div>
             `;
@@ -444,10 +565,12 @@
       async function updateStatus(district, newStatus) {
         try {
           // 显示加载状态
-          const buttons = document.querySelectorAll(`[onclick*="${district}"]`);
+          const buttons = document.querySelectorAll(`.district-card:nth-child(${Object.keys(currentStatus).indexOf(district)+1}) .btn`);
           buttons.forEach((btn) => {
             btn.disabled = true;
-            btn.innerHTML += '<div class="loading"></div>';
+            if (!btn.querySelector('.loading')) {
+              btn.innerHTML += '<div class="loading"></div>';
+            }
           });
 
           const response = await fetch("/api/update-status", {
@@ -480,10 +603,10 @@
         } catch (error) {
           console.error("更新状态失败:", error);
           showNotification("状态更新失败: " + error.message, "error");
-          // 重新加载状态以恢复正确的UI
-          loadDistrictStatus();
+          // 不重新加载状态，保持UI状态
         }
       }
+
 
       // 页面加载完成后初始化
       document.addEventListener("DOMContentLoaded", function () {

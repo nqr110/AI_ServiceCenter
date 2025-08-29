@@ -514,21 +514,21 @@ body {
 }
 
 /* 子页面内容样式 */
-.district-info {
+.block-info {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 30px;
     margin-bottom: 30px;
 }
 
-.district-stats {
+.block-stats {
     background: rgba(30, 64, 175, 0.1);
     border: 1px solid rgba(59, 130, 246, 0.3);
     border-radius: 10px;
     padding: 20px;
 }
 
-.district-stats h3 {
+.block-stats h3 {
     color: #60a5fa;
     margin-bottom: 15px;
     font-size: 18px;
@@ -537,12 +537,12 @@ body {
 }
 
 /* 警告主题样式 */
-.district-stats.warning-theme {
+.block-stats.warning-theme {
     background: rgba(255, 193, 7, 0.1);
     border: 1px solid rgba(255, 193, 7, 0.3);
 }
 
-.district-stats.warning-theme h3 {
+.block-stats.warning-theme h3 {
     color: #ffe066;
     border-bottom: 1px solid rgba(255, 193, 7, 0.3);
 }
@@ -566,14 +566,14 @@ body {
     font-size: 14px;
 }
 
-.district-description {
+.block-description {
     background: rgba(30, 64, 175, 0.1);
     border: 1px solid rgba(59, 130, 246, 0.3);
     border-radius: 10px;
     padding: 20px;
 }
 
-.district-description h3 {
+.block-description h3 {
     color: #60a5fa;
     margin-bottom: 15px;
     font-size: 18px;
@@ -581,30 +581,30 @@ body {
     padding-bottom: 8px;
 }
 
-.district-description.warning-theme {
+.block-description.warning-theme {
     background: rgba(255, 193, 7, 0.1);
     border: 1px solid rgba(255, 193, 7, 0.3);
 }
 
-.district-description.warning-theme h3 {
+.block-description.warning-theme h3 {
     color: #ffe066;
     border-bottom: 1px solid rgba(255, 193, 7, 0.3);
 }
 
-.district-description p {
+.block-description p {
     color: #cbd5e1;
     line-height: 1.6;
     font-size: 14px;
 }
 
-.district-features {
+.block-features {
     background: rgba(30, 64, 175, 0.1);
     border: 1px solid rgba(59, 130, 246, 0.3);
     border-radius: 10px;
     padding: 20px;
 }
 
-.district-features h3 {
+.block-features h3 {
     color: #60a5fa;
     margin-bottom: 15px;
     font-size: 18px;
@@ -749,4 +749,101 @@ body {
     .reset-view-button span {
         display: none; /* 小屏幕下隐藏文字，只显示图标 */
     }
+}
+
+/* 新增面板样式 */
+.status-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+}
+
+.status-label {
+    color: #93c5fd;
+    font-size: 14px;
+}
+
+.status-value {
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.status-value.online {
+    color: #10b981;
+}
+
+.status-value.offline {
+    color: #ef4444;
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+}
+
+.detail-label {
+    color: #93c5fd;
+    font-size: 14px;
+}
+
+.detail-value {
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.data-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+}
+
+.data-label {
+    color: #93c5fd;
+    font-size: 14px;
+}
+
+.data-value {
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.action-btn {
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    margin: 5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+}
+
+.action-btn:hover {
+    background: linear-gradient(135deg, #60a5fa, #3b82f6);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+}
+
+.action-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+}
+
+.panel-content p {
+    color: #cbd5e1;
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 5px 0;
 }

@@ -9,31 +9,42 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key'
 socketio = SocketIO(app, cors_allowed_origins="*")
 
-# 地块状态数据
-district_status = {
-    'A地': {'status': 'normal', 'color': '#5698c3'},  # 正常状态 - 蓝色
-    'B地': {'status': 'normal', 'color': '#5698c3'},
-    'C地': {'status': 'normal', 'color': '#5698c3'},
-    'D地': {'status': 'normal', 'color': '#5698c3'},
-    'E地': {'status': 'normal', 'color': '#5698c3'},
-    'F地': {'status': 'normal', 'color': '#5698c3'},
-    'G地': {'status': 'normal', 'color': '#5698c3'},
-    'H地': {'status': 'normal', 'color': '#5698c3'},
-    'I地': {'status': 'normal', 'color': '#5698c3'}
-}
+# 数据持久化文件路径
+DATA_FILE = 'district_status.json'
 
-# 地名映射
-district_names = {
-    'A地': 'A市',
-    'B地': 'B市',
-    'C地': 'C市',
-    'D地': 'D市',
-    'E地': 'E市',
-    'F地': 'F市',
-    'G地': 'G市',
-    'H地': 'H市',
-    'I地': 'I市'
-}
+# 加载地块状态数据
+def load_district_status():
+    """从文件加载地块状态数据"""
+    if os.path.exists(DATA_FILE):
+        try:
+            with open(DATA_FILE, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except Exception as e:
+            print(f"加载状态数据失败: {e}")
+    
+    # 如果文件不存在或加载失败，返回默认状态
+    default_status = {}
+    for i in range(1, 107):
+        default_status[f'区块{i}'] = {'status': 'normal', 'color': '#5698c3'}
+    return default_status
+
+# 保存地块状态数据
+def save_district_status():
+    """保存地块状态数据到文件"""
+    try:
+        with open(DATA_FILE, 'w', encoding='utf-8') as f:
+            json.dump(district_status, f, ensure_ascii=False, indent=2)
+        print("状态数据已保存")
+    except Exception as e:
+        print(f"保存状态数据失败: {e}")
+
+# 地块状态数据 - 从文件加载或使用默认值
+district_status = load_district_status()
+
+# 地名映射 - 修改为支持区块1到区块106
+district_names = {}
+for i in range(1, 107):
+    district_names[f'区块{i}'] = f'区块{i}'
 
 @app.route('/')
 def admin_index():
@@ -65,6 +76,9 @@ def update_district_status():
             district_status[district]['color'] = '#5698c3'  # 蓝色
         else:  # warning
             district_status[district]['color'] = '#ffc107'  # 警告黄色
+        
+        # 保存状态数据到文件
+        save_district_status()
         
         # 通过WebSocket广播状态更新到前端
         socketio.emit('status_update', {
@@ -111,5 +125,11 @@ if __name__ == '__main__':
     print("后台管理服务器启动中...")
     print("访问地址: http://localhost:5005")
     print("前端连接WebSocket: ws://localhost:5005")
+    print(f"数据持久化已启用，状态文件: {DATA_FILE}")
+    
+    # 统计当前状态
+    normal_count = sum(1 for status in district_status.values() if status['status'] == 'normal')
+    warning_count = sum(1 for status in district_status.values() if status['status'] == 'warning')
+    print(f"当前状态统计 - 正常: {normal_count}, 警告: {warning_count}")
+    
     socketio.run(app, debug=True, host='0.0.0.0', port=5005)
-

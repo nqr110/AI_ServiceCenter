@@ -1,0 +1,426 @@
+{
+  "区块1": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块2": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块3": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块4": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块5": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块6": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块7": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块8": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块9": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块10": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块11": {
+    "status": "warning",
+    "color": "#ffc107"
+  },
+  "区块12": {
+    "status": "warning",
+    "color": "#ffc107"
+  },
+  "区块13": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块14": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块15": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块16": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块17": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块18": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块19": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块20": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块21": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块22": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块23": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块24": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块25": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块26": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块27": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块28": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块29": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块30": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块31": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块32": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块33": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块34": {
+    "status": "warning",
+    "color": "#ffc107"
+  },
+  "区块35": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块36": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块37": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块38": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块39": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块40": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块41": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块42": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块43": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块44": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块45": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块46": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块47": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块48": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块49": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块50": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块51": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块52": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块53": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块54": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块55": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块56": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块57": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块58": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块59": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块60": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块61": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块62": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块63": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块64": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块65": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块66": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块67": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块68": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块69": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块70": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块71": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块72": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块73": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块74": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块75": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块76": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块77": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块78": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块79": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块80": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块81": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块82": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块83": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块84": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块85": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块86": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块87": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块88": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块89": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块90": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块91": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块92": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块93": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块94": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块95": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块96": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块97": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块98": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块99": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块100": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块101": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块102": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块103": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块104": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块105": {
+    "status": "normal",
+    "color": "#5698c3"
+  },
+  "区块106": {
+    "status": "normal",
+    "color": "#5698c3"
+  }
+}

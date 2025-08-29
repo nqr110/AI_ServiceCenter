@@ -39,24 +39,50 @@
     <div id="main-content" style="display: none">
       <!-- 标题区域 -->
       <div class="header">
-        <h1 class="main-title">AAAAA</h1>
-        <h2 class="sub-title">BBBBB</h2>
+        <h1 class="main-title">软通动力 综合管理系统</h1>
+        <h2 class="sub-title">-------</h2>
       </div>
 
       <!-- 左侧容器 -->
       <div class="left-panel">
         <div class="panel-container">
           <div class="panel-item" id="left-panel-1">
-            <h3>左侧面板1</h3>
-            <div class="panel-content">数据内容1</div>
+            <h3>区块统计</h3>
+            <div class="panel-content">
+              <div class="stat-item">
+                <span class="stat-label">总区块数</span>
+                <span class="stat-value">106</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">正常区块</span>
+                <span class="stat-value">95</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">警告区块</span>
+                <span class="stat-value">11</span>
+              </div>
+            </div>
           </div>
           <div class="panel-item" id="left-panel-2">
-            <h3>左侧面板2</h3>
-            <div class="panel-content">数据内容2</div>
+            <h3>系统状态</h3>
+            <div class="panel-content">
+              <div class="status-item">
+                <span class="status-label">地图服务</span>
+                <span class="status-value online">在线</span>
+              </div>
+              <div class="status-item">
+                <span class="status-label">数据更新</span>
+                <span class="status-value online">实时</span>
+              </div>
+            </div>
           </div>
           <div class="panel-item" id="left-panel-3">
-            <h3>左侧面板3</h3>
-            <div class="panel-content">数据内容3</div>
+            <h3>操作指南</h3>
+            <div class="panel-content">
+              <p>• 点击区块查看详情</p>
+              <p>• 鼠标拖拽旋转视角</p>
+              <p>• 滚轮缩放地图</p>
+            </div>
           </div>
         </div>
       </div>
@@ -65,16 +91,46 @@
       <div class="right-panel">
         <div class="panel-container">
           <div class="panel-item" id="right-panel-1">
-            <h3>右侧面板1</h3>
-            <div class="panel-content">数据内容1</div>
+            <h3>区块详情</h3>
+            <div class="panel-content">
+              <div class="detail-item">
+                <span class="detail-label">当前选中</span>
+                <span class="detail-value">无</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">区块ID</span>
+                <span class="detail-value">-</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">发展指数</span>
+                <span class="detail-value">-</span>
+              </div>
+            </div>
           </div>
           <div class="panel-item" id="right-panel-2">
-            <h3>右侧面板2</h3>
-            <div class="panel-content">数据内容2</div>
+            <h3>实时数据</h3>
+            <div class="panel-content">
+              <div class="data-item">
+                <span class="data-label">总人口</span>
+                <span class="data-value">约500万</span>
+              </div>
+              <div class="data-item">
+                <span class="data-label">总面积</span>
+                <span class="data-value">约2万平方公里</span>
+              </div>
+              <div class="data-item">
+                <span class="data-label">平均GDP</span>
+                <span class="data-value">约3000万元</span>
+              </div>
+            </div>
           </div>
           <div class="panel-item" id="right-panel-3">
-            <h3>右侧面板3</h3>
-            <div class="panel-content">数据内容3</div>
+            <h3>快速操作</h3>
+            <div class="panel-content">
+              <button class="action-btn" onclick="resetView()">重置视角</button>
+              <button class="action-btn" onclick="toggleRotation()">旋转地图</button>
+              <button class="action-btn" onclick="refreshData()">刷新数据</button>
+            </div>
           </div>
         </div>
       </div>
