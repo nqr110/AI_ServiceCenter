@@ -4,6 +4,7 @@ let rotationInterval;
 let blockDataMap = {}; // 存储区块数据映射
 let socket; // WebSocket连接
 let currentBlockColors = {}; // 当前区块颜色状态
+let statsPieChart; // 统计饼图实例
 
 // 区块数据映射（区块名称到区块ID的映射）
 const blockNameMap = {};
@@ -569,12 +570,14 @@ function rotateView() {
 function resetView() {
     if (myChart) {
         myChart.setOption({
-            viewControl: {
-                alpha: 45,
-                beta: 40,
-                distance: 200,
-                center: [0, 0, 0]
-            }
+            series: [{
+                viewControl: {
+                    alpha: 45,
+                    beta: 40,
+                    distance: 115,
+                    center: [0, 0, 0]
+                }
+            }]
         });
         debugOutput('视角已重置');
     }
@@ -964,6 +967,143 @@ function updateMapColors() {
             animation: false
         }]
     }, false);
+    
+    // 更新统计信息
+    updateBlockStatistics();
+}
+
+// 更新区块统计信息
+function updateBlockStatistics() {
+    let totalBlocks = 0;
+    let normalBlocks = 0;
+    let warningBlocks = 0;
+    
+    // 统计各种状态的区块数量
+    Object.values(currentBlockColors).forEach(color => {
+        totalBlocks++;
+        if (color === '#ffc107' || color.toLowerCase().includes('yellow')) {
+            warningBlocks++;
+        } else {
+            normalBlocks++;
+        }
+    });
+    
+    // 如果没有颜色数据，使用默认值
+    if (totalBlocks === 0) {
+        totalBlocks = 106;
+        normalBlocks = 106;
+        warningBlocks = 0;
+    }
+    
+    // 更新HTML显示
+    document.getElementById('total-blocks').textContent = totalBlocks;
+    document.getElementById('normal-blocks').textContent = normalBlocks;
+    document.getElementById('warning-blocks').textContent = warningBlocks;
+    
+    // 更新饼图
+    updateStatsPieChart(normalBlocks, warningBlocks);
+}
+
+// 初始化统计饼图
+function initStatsPieChart() {
+    const chartDom = document.getElementById('stats-pie-chart');
+    if (!chartDom) return;
+    
+    statsPieChart = echarts.init(chartDom);
+    
+    const option = {
+        tooltip: {
+            trigger: 'item',
+            formatter: '{b}: {c}个 ({d}%)',
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            borderColor: '#00d4ff',
+            borderWidth: 1,
+            textStyle: {
+                color: '#fff',
+                fontSize: 12
+            }
+        },
+        series: [{
+            name: '区块状态',
+            type: 'pie',
+            radius: '85%',
+            center: ['50%', '50%'],
+            data: [
+                { 
+                    value: 106, 
+                    name: '正常区块', 
+                    itemStyle: { 
+                        color: '#5698c3',
+                        shadowBlur: 8,
+                        shadowColor: 'rgba(86, 152, 195, 0.3)'
+                    } 
+                },
+                { 
+                    value: 0, 
+                    name: '警告区块', 
+                    itemStyle: { 
+                        color: '#ffc107',
+                        shadowBlur: 8,
+                        shadowColor: 'rgba(255, 193, 7, 0.3)'
+                    } 
+                }
+            ],
+            emphasis: {
+                itemStyle: {
+                    shadowBlur: 15,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                },
+                scale: true,
+                scaleSize: 5
+            },
+            label: {
+                show: false
+            },
+            labelLine: {
+                show: false
+            },
+            animationType: 'scale',
+            animationEasing: 'elasticOut',
+            animationDelay: function (idx) {
+                return Math.random() * 200;
+            }
+        }]
+    };
+    
+    statsPieChart.setOption(option);
+}
+
+// 更新统计饼图
+function updateStatsPieChart(normalCount, warningCount) {
+    if (!statsPieChart) return;
+    
+    const option = {
+        series: [{
+            data: [
+                { 
+                    value: normalCount, 
+                    name: '正常区块', 
+                    itemStyle: { 
+                        color: '#5698c3',
+                        shadowBlur: 8,
+                        shadowColor: 'rgba(86, 152, 195, 0.3)'
+                    } 
+                },
+                { 
+                    value: warningCount, 
+                    name: '警告区块', 
+                    itemStyle: { 
+                        color: '#ffc107',
+                        shadowBlur: 8,
+                        shadowColor: 'rgba(255, 193, 7, 0.3)'
+                    } 
+                }
+            ]
+        }]
+    };
+    
+    statsPieChart.setOption(option);
 }
 
 // 页面加载完成后初始化
@@ -993,6 +1133,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 初始化重置视角按钮事件
     initResetViewButton();
+    
+    // 初始化统计饼图
+    initStatsPieChart();
 
     debugOutput('页面初始化完成');
 });

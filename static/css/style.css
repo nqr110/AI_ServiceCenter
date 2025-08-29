@@ -19,13 +19,8 @@ body {
     transform: translateX(-50%);
     z-index: 1000;
     text-align: center;
-    padding: 15px 30px 25px 30px;
-    background: linear-gradient(90deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 64, 175, 0.95) 50%, rgba(15, 23, 42, 0.95) 100%);
-    backdrop-filter: blur(15px);
-    border-radius: 15px 15px 0 0;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    padding: 15px 30px;
     min-width: 400px;
-    clip-path: polygon(0 0, 100% 0, 85% 100%, 15% 100%);
 }
 
 .main-title {
@@ -48,9 +43,9 @@ body {
 .left-panel {
     position: fixed;
     left: 20px;
-    top: 20px;
+    top: 140px;
     width: 310px;
-    height: calc(100vh - 40px);
+    height: calc(100vh - 160px);
     z-index: 100;
 }
 
@@ -58,9 +53,9 @@ body {
 .right-panel {
     position: fixed;
     right: 20px;
-    top: 20px;
+    top: 140px;
     width: 310px;
-    height: calc(100vh - 40px);
+    height: calc(100vh - 160px);
     z-index: 100;
 }
 
@@ -360,56 +355,68 @@ body {
     will-change: transform;
 }
 
-/* 重置视角按钮 */
-.reset-view-button {
+/* 右上角操作按钮组 */
+.bottom-right-controls {
     position: fixed;
     top: 20px;
-    right: 340px;
-    z-index: 2000;
+    right: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 1001;
+    background: rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    border-radius: 8px;
+    backdrop-filter: blur(5px);
+}
+
+.control-btn {
     background: rgba(15, 23, 42, 0.9);
     border: 1px solid rgba(59, 130, 246, 0.5);
     border-radius: 8px;
     color: #ffffff;
-    padding: 12px 16px;
+    padding: 10px 14px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    min-width: 120px;
+    min-width: 110px;
+    white-space: nowrap;
 }
 
-.reset-view-button:hover {
+.control-btn:hover {
     background: rgba(30, 64, 175, 0.9);
     border-color: rgba(59, 130, 246, 0.8);
-    transform: translateY(-2px);
+    transform: translateX(-3px);
     box-shadow: 0 6px 16px rgba(59, 130, 246, 0.3);
 }
 
-.reset-view-button:active {
-    transform: translateY(0);
+.control-btn:active {
+    transform: translateX(0);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-.reset-view-button svg {
+.control-btn svg {
     color: #93c5fd;
     transition: color 0.3s ease;
+    flex-shrink: 0;
 }
 
-.reset-view-button:hover svg {
+.control-btn:hover svg {
     color: #ffffff;
 }
 
-.reset-view-button span {
+.control-btn span {
     color: #93c5fd;
     transition: color 0.3s ease;
 }
 
-.reset-view-button:hover span {
+.control-btn:hover span {
     color: #ffffff;
 }
 
@@ -545,6 +552,20 @@ body {
 .block-stats.warning-theme h3 {
     color: #ffe066;
     border-bottom: 1px solid rgba(255, 193, 7, 0.3);
+}
+
+.stats-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.stats-text {
+    flex: 1;
+}
+
+.stats-chart {
+    flex-shrink: 0;
 }
 
 .stat-item {
@@ -738,15 +759,22 @@ body {
         font-size: 12px;
     }
     
-    /* 小屏幕下的重置视角按钮 */
-    .reset-view-button {
+    /* 小屏幕下的操作按钮组 */
+    .bottom-right-controls {
+        top: 20px;
         right: 230px;
-        padding: 10px 12px;
-        font-size: 12px;
-        min-width: 100px;
+        gap: 8px;
+        flex-direction: row;
+        flex-wrap: wrap;
     }
     
-    .reset-view-button span {
+    .control-btn {
+        padding: 8px 10px;
+        font-size: 11px;
+        min-width: 90px;
+    }
+    
+    .control-btn span {
         display: none; /* 小屏幕下隐藏文字，只显示图标 */
     }
 }
