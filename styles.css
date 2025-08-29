@@ -16,32 +16,115 @@ body {
 #app {
     width: 100vw;
     height: 100vh;
-    display: flex;
-    flex-direction: column;
+    position: relative;
 }
 
-/* 顶部导航栏 */
-.header {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    padding: 15px 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+/* 顶部标题样式 */
+.page-title {
+    position: fixed;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
     z-index: 1000;
 }
 
-.header h1 {
-    font-size: 24px;
+.main-title {
+    font-size: 32px;
     font-weight: 600;
-    color: #2c3e50;
-    margin: 0;
+    color: #ffffff;
+    margin: 0 0 8px 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.controls {
+.sub-title {
+    font-size: 18px;
+    font-weight: 400;
+    color: #e8f4fd;
+    margin: 0;
+    opacity: 0.9;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* 左侧数据面板 */
+.left-panels {
+    position: fixed;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
     display: flex;
+    flex-direction: column;
+    gap: 20px;
+    z-index: 900;
+}
+
+/* 右侧数据面板 */
+.right-panels {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    z-index: 900;
+}
+
+/* 数据面板通用样式 */
+.data-panel {
+    width: 280px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.data-panel:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* 面板头部 */
+.panel-header {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 12px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.panel-header h3 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* 面板内容 */
+.panel-content {
+    padding: 20px;
+    min-height: 120px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.panel-content p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.5;
+    opacity: 0.9;
+}
+
+/* 右下角控制按钮 */
+.controls {
+    position: fixed;
+    bottom: 30px;
+    right: 320px;
+    display: flex;
+    flex-direction: column;
     gap: 10px;
+    z-index: 1000;
 }
 
 .controls button {
@@ -68,14 +151,15 @@ body {
 
 /* 主要内容区域 */
 .main-content {
-    flex: 1;
-    display: flex;
+    width: 100%;
+    height: 100vh;
     position: relative;
 }
 
 /* 3D地图容器 */
 #map-container {
-    flex: 1;
+    width: 100%;
+    height: 100%;
     position: relative;
     overflow: hidden;
 }
@@ -91,95 +175,7 @@ body {
     cursor: grabbing;
 }
 
-/* 侧边栏 */
-.sidebar {
-    width: 320px;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    padding: 20px;
-    overflow-y: auto;
-    box-shadow: -2px 0 20px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
 
-/* 信息面板 */
-.info-panel,
-.stats-panel,
-.legend-panel {
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 12px;
-    padding: 16px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.info-panel h3,
-.stats-panel h3,
-.legend-panel h3 {
-    font-size: 16px;
-    font-weight: 600;
-    color: #2c3e50;
-    margin-bottom: 12px;
-    padding-bottom: 8px;
-    border-bottom: 2px solid #667eea;
-}
-
-#block-info {
-    font-size: 14px;
-    line-height: 1.6;
-    color: #555;
-}
-
-#block-info p {
-    margin-bottom: 8px;
-}
-
-/* 统计信息 */
-.stat-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.stat-item:last-child {
-    border-bottom: none;
-}
-
-.stat-item .label {
-    font-weight: 500;
-    color: #666;
-}
-
-.stat-item .value {
-    font-weight: 600;
-    color: #667eea;
-    font-size: 16px;
-}
-
-/* 图例 */
-.legend {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.legend-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 14px;
-}
-
-.color-box {
-    width: 16px;
-    height: 16px;
-    border-radius: 3px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-}
 
 /* 加载动画 */
 .loading {
@@ -234,51 +230,13 @@ body {
         font-size: 20px;
     }
     
-    .main-content {
-        flex-direction: column;
+    .controls {
+        flex-wrap: wrap;
+        justify-content: center;
     }
     
-    .sidebar {
-        width: 100%;
-        height: 200px;
-        order: 2;
+    .controls button {
+        font-size: 12px;
+        padding: 6px 12px;
     }
-    
-    #map-container {
-        order: 1;
-        height: calc(100vh - 280px);
-    }
-}
-
-/* 滚动条样式 */
-.sidebar::-webkit-scrollbar {
-    width: 6px;
-}
-
-.sidebar::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.1);
-    border-radius: 3px;
-}
-
-.sidebar::-webkit-scrollbar-thumb {
-    background: #667eea;
-    border-radius: 3px;
-}
-
-.sidebar::-webkit-scrollbar-thumb:hover {
-    background: #5a6fd8;
-}
-
-/* 动画效果 */
-.info-panel,
-.stats-panel,
-.legend-panel {
-    transition: all 0.3s ease;
-}
-
-.info-panel:hover,
-.stats-panel:hover,
-.legend-panel:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }

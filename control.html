@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Center 控制面板</title>
+    <link rel="stylesheet" href="control-styles.css">
+</head>
+<body>
+    <div id="control-app">
+        <!-- 顶部导航栏 -->
+        <header class="control-header">
+            <h1>Smart Center 控制面板</h1>
+            <div class="status-indicator">
+                <span class="status-dot"></span>
+                <span>连接状态: 已连接</span>
+            </div>
+        </header>
+
+        <!-- 主要控制面板区域 -->
+        <main class="control-main">
+            <!-- 区块信息面板 -->
+            <section class="control-panel info-panel">
+                <h3>区块信息</h3>
+                <div id="block-info">
+                    <p>点击区块查看详细信息</p>
+                </div>
+            </section>
+
+            <!-- 统计信息面板 -->
+            <section class="control-panel stats-panel">
+                <h3>统计信息</h3>
+                <div id="stats">
+                    <div class="stat-item">
+                        <span class="label">总区块数:</span>
+                        <span class="value" id="total-blocks">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="label">已选中:</span>
+                        <span class="value" id="selected-blocks">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="label">活跃区块:</span>
+                        <span class="value" id="active-blocks">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="label">更新时间:</span>
+                        <span class="value" id="last-update">--:--:--</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 图例面板 -->
+            <section class="control-panel legend-panel">
+                <h3>图例</h3>
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="color-box" style="background-color: #4CAF50;"></div>
+                        <span>普通区块</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="color-box" style="background-color: #FF9800;"></div>
+                        <span>选中区块</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="color-box" style="background-color: #F44336;"></div>
+                        <span>高亮区块</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="color-box" style="background-color: #2196F3;"></div>
+                        <span>活跃区块</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 控制操作面板 -->
+            <section class="control-panel actions-panel">
+                <h3>控制操作</h3>
+                <div class="actions">
+                    <button class="action-btn primary" id="refresh-data">刷新数据</button>
+                    <button class="action-btn secondary" id="clear-selection">清除选择</button>
+                    <button class="action-btn secondary" id="export-data">导出数据</button>
+                    <button class="action-btn danger" id="reset-all">重置全部</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- 主要JavaScript文件 -->
+    <script src="js/control.js"></script>
+</body>
+</html>

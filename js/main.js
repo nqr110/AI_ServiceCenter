@@ -312,7 +312,7 @@ class SmartCenter3D {
                 color: this.colors.normal,
                 wireframe: this.settings.wireframe,
                 transparent: true,
-                opacity: 0.9 // 提高透明度，避免看到底部框线
+                opacity: 1.0 // 100%透明度（完全透明）
             });
             
             const mesh = new THREE.Mesh(blockGeometry, material);
@@ -373,8 +373,12 @@ class SmartCenter3D {
         this.controls.enableDamping = true;
         this.controls.dampingFactor = 0.05;
         this.controls.screenSpacePanning = false;
-        this.controls.minDistance = 100;
-        this.controls.maxDistance = 2000;
+        
+        // 鼠标滚轮缩放设置
+        this.controls.enableZoom = true; // 确保启用缩放
+        this.controls.zoomSpeed = 1.2; // 调整缩放速度，使缩放更灵敏
+        this.controls.minDistance = 50; // 允许更近的距离
+        this.controls.maxDistance = 3000; // 允许更远的距离
         this.controls.maxPolarAngle = Math.PI * 0.8; // 允许相机向下俯视，像人低头一样
         
         // 设置初始目标点和俯视角度
@@ -487,26 +491,69 @@ class SmartCenter3D {
     }
     
     showBlockInfo(feature) {
-        const infoDiv = document.getElementById('block-info');
+        // 区块信息已移至控制面板，通过postMessage发送数据
         const properties = feature.properties;
+        const blockData = {
+            id: properties.block_id || '未知',
+            name: properties.name || '未知',
+            adcode: properties.adcode || '未知',
+            level: properties.level || '未知',
+            childrenNum: properties.childrenNum || '未知',
+            x: 0, // 可以添加坐标信息
+            y: 0,
+            area: 0, // 可以计算面积
+            status: '正常'
+        };
         
-        infoDiv.innerHTML = `
-            <p><strong>区块名称:</strong> ${properties.name || '未知'}</p>
-            <p><strong>区块ID:</strong> ${properties.block_id || '未知'}</p>
-            <p><strong>行政代码:</strong> ${properties.adcode || '未知'}</p>
-            <p><strong>级别:</strong> ${properties.level || '未知'}</p>
-            <p><strong>子区域数:</strong> ${properties.childrenNum || '未知'}</p>
-        `;
+        // 向控制面板发送区块信息
+        try {
+            // 检查是否有已存在的控制面板窗口
+            if (window.controlPanelWindow && !window.controlPanelWindow.closed) {
+                window.controlPanelWindow.postMessage({
+                    type: 'SMART_CENTER_DATA',
+                    payload: { blockInfo: blockData }
+                }, '*');
+            }
+        } catch (error) {
+            // 控制面板窗口不存在或无法访问，忽略错误
+        }
     }
     
     clearBlockInfo() {
-        const infoDiv = document.getElementById('block-info');
-        infoDiv.innerHTML = '<p>点击区块查看详细信息</p>';
+        // 向控制面板发送清除信息的指令
+        try {
+            // 检查是否有已存在的控制面板窗口
+            if (window.controlPanelWindow && !window.controlPanelWindow.closed) {
+                window.controlPanelWindow.postMessage({
+                    type: 'SMART_CENTER_DATA',
+                    payload: { blockInfo: null }
+                }, '*');
+            }
+        } catch (error) {
+            // 控制面板窗口不存在或无法访问，忽略错误
+        }
     }
     
     updateStats() {
-        document.getElementById('total-blocks').textContent = this.blockMeshes.length;
-        document.getElementById('selected-blocks').textContent = this.selectedBlock ? 1 : 0;
+        // 统计信息已移至控制面板，这里只保留内部数据更新
+        // 可以通过postMessage向控制面板发送数据
+        const statsData = {
+            totalBlocks: this.blockMeshes.length,
+            selectedBlocks: this.selectedBlock ? 1 : 0
+        };
+        
+        // 向控制面板发送数据（如果控制面板窗口存在）
+        try {
+            // 检查是否有已存在的控制面板窗口
+            if (window.controlPanelWindow && !window.controlPanelWindow.closed) {
+                window.controlPanelWindow.postMessage({
+                    type: 'SMART_CENTER_DATA',
+                    payload: { stats: statsData }
+                }, '*');
+            }
+        } catch (error) {
+            // 控制面板窗口不存在或无法访问，忽略错误
+        }
     }
     
     resetView() {
@@ -556,10 +603,12 @@ class SmartCenter3D {
     
     showLoading(show) {
         const loading = document.getElementById('loading');
-        if (show) {
-            loading.classList.remove('hidden');
-        } else {
-            loading.classList.add('hidden');
+        if (loading) {
+            if (show) {
+                loading.classList.remove('hidden');
+            } else {
+                loading.classList.add('hidden');
+            }
         }
     }
     
@@ -589,14 +638,40 @@ function initApp() {
     new SmartCenter3D();
 }
 
+// 控制面板窗口管理函数
+function openControlPanel() {
+    // 检查是否已有控制面板窗口打开
+    if (window.controlPanelWindow && !window.controlPanelWindow.closed) {
+        // 如果窗口已存在，将其置于前台
+        window.controlPanelWindow.focus();
+        return;
+    }
+    
+    // 打开新的控制面板窗口
+    window.controlPanelWindow = window.open(
+        'http://127.0.0.1:4000/control.html', 
+        'control-panel', 
+        'width=1200,height=800,scrollbars=yes,resizable=yes'
+    );
+    
+    // 监听窗口关闭事件，清理引用
+    if (window.controlPanelWindow) {
+        window.controlPanelWindow.addEventListener('beforeunload', () => {
+            window.controlPanelWindow = null;
+        });
+    }
+}
+
 // 页面加载完成后开始初始化
 document.addEventListener('DOMContentLoaded', () => {
     initApp();
 });
 
-// 备用初始化方法
-window.addEventListener('load', () => {
-    if (document.readyState === 'complete') {
-        setTimeout(initApp, 500);
+// 页面卸载时清理控制面板窗口引用
+window.addEventListener('beforeunload', () => {
+    if (window.controlPanelWindow && !window.controlPanelWindow.closed) {
+        window.controlPanelWindow.close();
     }
 });
+
+// 备用初始化方法已移除，避免重复初始化

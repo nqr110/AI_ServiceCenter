@@ -4,19 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Center 3D地图</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=13">
 </head>
 <body>
     <div id="app">
-        <!-- 顶部导航栏 -->
-        <header class="header">
-            <h1>Smart Center 3D地图可视化</h1>
-            <div class="controls">
-                <button id="resetView">重置视角</button>
-                <button id="toggleWireframe">切换线框</button>
-                <button id="toggleAnimation">动画开关</button>
+        <!-- 顶部标题 -->
+        <div class="page-title">
+            <h1 class="main-title">大数据驾驶舱大屏</h1>
+            <h2 class="sub-title">AI_ServiceCenter</h2>
+        </div>
+        
+        <!-- 左侧数据容器 -->
+        <div class="left-panels">
+            <div class="data-panel" id="panel-left-1">
+                <div class="panel-header">
+                    <h3>数据概览</h3>
+                </div>
+                <div class="panel-content">
+                    <p>数据内容待补充...</p>
+                </div>
             </div>
-        </header>
+            <div class="data-panel" id="panel-left-2">
+                <div class="panel-header">
+                    <h3>实时监控</h3>
+                </div>
+                <div class="panel-content">
+                    <p>监控内容待补充...</p>
+                </div>
+            </div>
+            <div class="data-panel" id="panel-left-3">
+                <div class="panel-header">
+                    <h3>统计分析</h3>
+                </div>
+                <div class="panel-content">
+                    <p>分析内容待补充...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 右侧数据容器 -->
+        <div class="right-panels">
+            <div class="data-panel" id="panel-right-1">
+                <div class="panel-header">
+                    <h3>业务指标</h3>
+                </div>
+                <div class="panel-content">
+                    <p>指标内容待补充...</p>
+                </div>
+            </div>
+            <div class="data-panel" id="panel-right-2">
+                <div class="panel-header">
+                    <h3>运营数据</h3>
+                </div>
+                <div class="panel-content">
+                    <p>运营内容待补充...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 右下角控制按钮 -->
+        <div class="controls">
+            <button id="resetView">重置视角</button>
+            <button id="toggleWireframe">切换线框</button>
+            <button id="toggleAnimation">动画开关</button>
+        </div>
 
         <!-- 主要内容区域 -->
         <main class="main-content">
@@ -24,48 +75,6 @@
             <div id="map-container">
                 <canvas id="three-canvas"></canvas>
             </div>
-
-            <!-- 侧边栏信息面板 -->
-            <aside class="sidebar">
-                <div class="info-panel">
-                    <h3>区块信息</h3>
-                    <div id="block-info">
-                        <p>点击区块查看详细信息</p>
-                    </div>
-                </div>
-
-                <div class="stats-panel">
-                    <h3>统计信息</h3>
-                    <div id="stats">
-                        <div class="stat-item">
-                            <span class="label">总区块数:</span>
-                            <span class="value" id="total-blocks">0</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="label">已选中:</span>
-                            <span class="value" id="selected-blocks">0</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="legend-panel">
-                    <h3>图例</h3>
-                    <div class="legend">
-                        <div class="legend-item">
-                            <div class="color-box" style="background-color: #4CAF50;"></div>
-                            <span>普通区块</span>
-                        </div>
-                        <div class="legend-item">
-                            <div class="color-box" style="background-color: #FF9800;"></div>
-                            <span>选中区块</span>
-                        </div>
-                        <div class="legend-item">
-                            <div class="color-box" style="background-color: #F44336;"></div>
-                            <span>高亮区块</span>
-                        </div>
-                    </div>
-                </div>
-            </aside>
         </main>
 
         <!-- 加载提示 -->
@@ -77,10 +86,10 @@
 
     <!-- 引入Three.js和相关库 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="js/OrbitControls.js?v=2"></script>
+    <script src="js/OrbitControls.js?v=12"></script>
     <script src="https://unpkg.com/dat.gui@0.7.9/build/dat.gui.min.js"></script>
     
     <!-- 主要JavaScript文件 -->
-    <script src="js/main.js?v=2"></script>
+    <script src="js/main.js?v=12"></script>
 </body>
 </html>
