@@ -64,16 +64,18 @@ function initMap() {
         zlevel: 0
     });
     
-    // 并行获取GeoJSON数据和区块数据
+    // 并行获取GeoJSON数据、区块数据和全国地图数据
     Promise.all([
         fetch('/api/blocks-geojson').then(response => response.json()),
-        fetch('/api/block-data').then(response => response.json())
-    ]).then(([geoJson, blockData]) => {
-        debugOutput('数据加载成功 - GeoJSON特征数量: ' + geoJson.features.length + ', 区块数据数量: ' + blockData.length);
+        fetch('/api/block-data').then(response => response.json()),
+        fetch('/data/geojson.json').then(response => response.json())
+    ]).then(([geoJson, blockData, chinaGeoJson]) => {
+        debugOutput('数据加载成功 - GeoJSON特征数量: ' + geoJson.features.length + ', 区块数据数量: ' + blockData.length + ', 全国地图特征数量: ' + chinaGeoJson.features.length);
         myChart.hideLoading();
 
         // 注册地图
         echarts.registerMap('jinhua', geoJson);
+        echarts.registerMap('china', chinaGeoJson);
         debugOutput('地图已注册');
 
         // 创建数据映射并初始化颜色状态
@@ -135,39 +137,72 @@ function initMap() {
             //         color: ['#1e40af', '#3b82f6', '#60a5fa', '#93c5fd']
             //     }
             // },
+            geo3D: {
+                map: 'china',
+                show: true,
+                boxHeight: 0.5, // 全国地图的厚度很薄，作为底面
+                regionHeight: 0.1,
+                itemStyle: {
+                    color: 'rgba(30, 64, 175, 0.2)', // 淡蓝色
+                    borderColor: 'rgba(59, 130, 246, 0.5)',
+                    borderWidth: 1
+                },
+                emphasis: {
+                    disabled: true
+                },
+                label: {
+                    show: false
+                },
+                viewControl: {
+                    projection: 'perspective',
+                    alpha: 35,
+                    beta: 0,
+                    distance: 200,
+                    center: [0, 0, 0],
+                    panSensitivity: 0.5,
+                    rotateSensitivity: 0.5,
+                    zoomSensitivity: 0.8,
+                    autoRotate: false,
+                    minAlpha: 10,
+                    maxAlpha: 80,
+                    minBeta: -40,
+                    maxBeta: 80,
+                    minDistance: 150,
+                    maxDistance: 300,
+                    damping: 0.98,
+                    enableZoom: true,
+                    enableRotate: true,
+                    enablePan: true
+                }
+            },
             series: [
+                // 金华市3D地图主层
                 {
                     type: 'map3D',
                     map: 'jinhua',
+                    // 不使用geo3D坐标系统，而是独立定位
+                    // coordinateSystem: 'geo3D',
                     data: blockData.map(item => ({
                         name: item.name,
                         // value: item.value,  // 移除value字段避免数据驱动的颜色变化
                         population: item.population
                     })),
-                    boxHeight: 20,
-                    regionHeight: 3,
+                    // 地理定位配置，让金华市显示在正确的地理位置
+                    center: [119.6, 29.1], // 金华市地理坐标
+                    zoom: 1, // 缩放级别，让金华市在全国地图中显示合适的大小
+                    // 布局配置，精确定位金华市在全国地图中的位置
+                    layoutCenter: ['75%', '60%'], // 金华市在浙江省中部的正确位置
+                    layoutSize: '6%', // 金华市相对于全国地图的大小，稍微缩小
+                    boxHeight: 20, // 金华市3D地图的高度
+                    regionHeight: 3, // 区域厚度
                     shading: 'lambert',
-                    environment: 'none',
-                    groundPlane: {
-                        show: false
-                    },
-                    light: {
-                        main: {
-                            color: '#ffffff',
-                            intensity: 0.8,
-                            shadow: false,
-                            alpha: 45,
-                            beta: 30
-                        },
-                        ambient: {
-                            intensity: 0.7
-                        }
-                    },
+                    // 与全国地图保持相同的视角控制
                     viewControl: {
                         projection: 'perspective',
-                        alpha: 45,
-                        beta: 40,
-                        distance: 115,
+                        alpha: 35,
+                        beta: 0,
+                        distance: 200,
+                        center: [0, 0, 0],
                         panSensitivity: 0.5,
                         rotateSensitivity: 0.5,
                         zoomSensitivity: 0.8,
@@ -176,8 +211,8 @@ function initMap() {
                         maxAlpha: 80,
                         minBeta: -40,
                         maxBeta: 80,
-                        minDistance: 80,
-                        maxDistance: 200,
+                        minDistance: 150,
+                        maxDistance: 300,
                         damping: 0.98,
                         enableZoom: true,
                         enableRotate: true,

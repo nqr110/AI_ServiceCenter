@@ -60,6 +60,17 @@ def load_district_status():
         default_status[f'区块{i}'] = {'status': 'normal', 'color': '#5698c3'}
     return default_status
 
+@app.route('/data/geojson.json')
+def get_china_geojson():
+    """提供全国地图的GeoJSON数据"""
+    try:
+        with open('data/geojson.json', 'r', encoding='utf-8') as f:
+            return f.read(), 200, {'Content-Type': 'application/json'}
+    except FileNotFoundError:
+        return jsonify({"error": "全国地图GeoJSON文件未找到"}), 404
+    except Exception as e:
+        return jsonify({"error": f"全国地图数据加载错误: {str(e)}"}), 500
+
 # 保留原有的API端点以兼容性
 @app.route('/api/jinhua-geojson')
 def get_jinhua_geojson():
